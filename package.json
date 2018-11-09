@@ -9,9 +9,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
+    "history": "^4.7.2",
     "meteor-node-stubs": "^0.4.1",
     "react": "^16.5.0",
-    "react-dom": "^16.5.0"
+    "react-beautiful-dnd": "^9.0.2",
+    "react-dom": "^16.5.0",
+    "react-drag-drawer": "^3.3.0",
+    "react-router": "^4.3.1"
   },
   "meteor": {
     "mainModule": {
