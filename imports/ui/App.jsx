@@ -7,6 +7,11 @@ import Register from './routers/Register';
 import Kanban from './routers/Kanban';
 import Hello from './Hello.jsx';
 import Info from './Info.jsx';
+import LanguageToggle from './components/LanguageToggle.jsx';
+// 
+// i18n.setLocale('zh-CN');
+//
+// console.log(i18n.getLocale())
 
 class App extends React.Component {
   render() {
@@ -15,6 +20,7 @@ class App extends React.Component {
         <h1>Welcome to Meteor!</h1>
         <Hello />
         <Info />
+        <LanguageToggle />
         <div>连接状况: {JSON.stringify(this.props.connected)}</div>
         <BrowserRouter>
           <Switch>
