@@ -11,12 +11,24 @@ Meteor.users.deny({
 const AUTH_METHODS = [
   'login',
   'logout',
+  'logoutOtherClients',
+  'getNewToken',
+  'removeOtherTokens',
+  'configureLoginService',
+  'changePassword',
+  'forgotPassword',
+  'resetPassword',
+  'verifyEmail',
+  'createUser',
+  'ATRemoveService',
+  'ATCreateUserServer',
+  'ATResendVerificationEmail',
 ];
 
 if (Meteor.isServer) {
   DDPRateLimiter.addRule({
     name(name) {
-      return _.contains(AUTH_METHODS, name);
+      return _.includes(AUTH_METHODS, name);
     },
 
     connectionId() { return true; },
