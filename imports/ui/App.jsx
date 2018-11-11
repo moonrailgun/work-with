@@ -1,13 +1,36 @@
 import React from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Meteor } from 'meteor/meteor';
+import Login from './routers/Login';
+import Register from './routers/Register';
+import Kanban from './routers/Kanban';
 import Hello from './Hello.jsx';
 import Info from './Info.jsx';
 
-const App = () => (
-  <div>
-    <h1>Welcome to Meteor!</h1>
-    <Hello />
-    <Info />
-  </div>
-);
+class App extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>Welcome to Meteor!</h1>
+        <Hello />
+        <Info />
+        <div>连接状况: {JSON.stringify(this.props.connected)}</div>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/kanban" component={Kanban} />
+          </Switch>
+        </BrowserRouter>
+      </div>
+    )
+  }
+}
 
-export default App;
+export default withTracker(() => {
+  return {
+    user: Meteor.user(),
+    connected: Meteor.status().connected,
+  }
+})(App);
