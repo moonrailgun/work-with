@@ -27,3 +27,6 @@ accounts-google
 accounts-weibo
 erasaur:meteor-lodash
 ostrio:files
+aldeed:simple-schema
+aldeed:collection2
+dburles:collection-helpers
