@@ -31,6 +31,11 @@ Kanban.schema = new SimpleSchema({
     ],
     defaultValue: 'public',
   },
+  columnList: {
+    type: [String],
+    defaultValue: [],
+    regEx: SimpleSchema.RegEx.Id,
+  },
   teamId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
