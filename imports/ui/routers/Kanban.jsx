@@ -1,9 +1,20 @@
 import React from 'react';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Kanban } from '/imports/api/kanban/kanban';
 
-export default class Kanban extends React.Component {
+class KanbanContainer extends React.Component {
   render() {
     return (
-      <div>看板</div>
+      <div>
+        当前看板信息:
+        {JSON.stringify(this.props.kanban)}
+      </div>
     )
   }
 }
+
+export default withTracker(() => {
+  return {
+    kanban: Kanban.findOne(),
+  }
+})(KanbanContainer);

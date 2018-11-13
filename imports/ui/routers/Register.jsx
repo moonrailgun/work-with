@@ -39,7 +39,7 @@ export default class Register extends React.Component {
           )
         }
         <div>
-          <label>用戶名</label>
+          <label>用户名</label>
           <input
             type="text"
             value={this.state.email}
