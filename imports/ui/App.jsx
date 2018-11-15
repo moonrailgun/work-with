@@ -8,20 +8,39 @@ import Kanban from './routers/Kanban';
 import Hello from './Hello.jsx';
 import Info from './Info.jsx';
 import LanguageToggle from './components/LanguageToggle.jsx';
-// 
+import NavBar from './components/NavBar.jsx';
+
 // i18n.setLocale('zh-CN');
 //
 // console.log(i18n.getLocale())
 
 class App extends React.Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      redirectTo: '',
+      defaultKanban: '',
+    };
+  }
+
+  renderRedirect() {
+    const { redirectTo, defaultKanban } = this.state;
+    const { pathname } = location;
+    let redirect = null;
+    if (redirectTo && redirectTo !== pathname) {
+      redirect = <Redirect to={redirectTo} />
+    } else if(pathname === '/' && defaultKanban) {
+      redirect = <Redirect ro={defaultKanban} />
+    }
+
+    return redirect;
+  }
+
+  renderContent() {
     return (
       <div>
-        <h1>Welcome to Meteor!</h1>
-        <Hello />
-        <Info />
         <LanguageToggle />
-        <div>连接状况: {JSON.stringify(this.props.connected)}</div>
+        <NavBar />
         <BrowserRouter>
           <Switch>
             <Route path="/login" component={Login} />
@@ -32,11 +51,21 @@ class App extends React.Component {
       </div>
     )
   }
+
+  render() {
+    return (
+      <BrowserRouter>
+        <Route
+          render={({ location }) => (
+            this.renderRedirect(location) || this.renderContent(location)
+          )}
+        />
+      </BrowserRouter>
+    )
+  }
 }
 
 export default withTracker(() => {
   return {
-    user: Meteor.user(),
-    connected: Meteor.status().connected,
   }
 })(App);
