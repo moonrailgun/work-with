@@ -104,6 +104,29 @@ class NavBar extends React.Component {
     }
   }
 
+  renderUserInfo() {
+    const {
+      user
+    } = this.props;
+
+    if(user) {
+      return (
+        <div>
+          <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <MailIcon />
+            </Badge>
+          </IconButton>
+          <IconButton color="inherit">
+            <Badge badgeContent={4} color="secondary">
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+        </div>
+      )
+    }
+  }
+
   render() {
     const {
       teamName = 'Self',
@@ -134,18 +157,7 @@ class NavBar extends React.Component {
                 }}
               />
             </div>
-            <div>
-              <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <MailIcon />
-                </Badge>
-              </IconButton>
-              <IconButton color="inherit">
-                <Badge badgeContent={4} color="secondary">
-                  <NotificationsIcon />
-                </Badge>
-              </IconButton>
-            </div>
+            {this.renderUserInfo()}
           </Toolbar>
         </AppBar>
       </div>
