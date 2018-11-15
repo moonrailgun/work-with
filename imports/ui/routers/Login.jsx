@@ -6,6 +6,7 @@ import i18n from 'meteor/universe:i18n';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -86,7 +87,7 @@ class Login extends React.Component {
         <Grid item className="login-container">
           <Card className={classes.root}>
             <CardContent className={classes.loginContainer}>
-              <h2>登录</h2>
+              <Typography variant="h5" noWrap>登录</Typography>
               <Snackbar
                 anchorOrigin={{
                   vertical: 'top',
@@ -112,17 +113,16 @@ class Login extends React.Component {
                 />
               </Snackbar>
               <form onSubmit={(e) => this._handleLogin(e)} className={classes.loginContainer}>
-                <input name="test"></input>
                 <TextField
                   id="login-email"
                   type="email"
                   label="电子邮箱"
-                  margin="normal"
+                  margin="dense"
                   value={this.state.email}
                   onChange={(e) => this.setState({email: e.target.value})}
                   />
                 <FormControl
-                  margin="normal"
+                  margin="dense"
                   >
                   <InputLabel htmlFor="login-password">密码</InputLabel>
                   <Input
@@ -150,6 +150,16 @@ class Login extends React.Component {
                     color="primary"
                   >
                     登录
+                  </Button>
+                </FormControl>
+                <FormControl
+                  margin="dense"
+                  >
+                  <Button
+                    color="secondary"
+                    onClick={() => this.props.history.push('/register')}
+                  >
+                    注册账号
                   </Button>
                 </FormControl>
               </form>
