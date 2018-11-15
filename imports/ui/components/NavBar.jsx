@@ -33,8 +33,8 @@ const styles = theme => ({
     marginRight: 20,
   },
   networkTip: {
-    marginLeft: 6,
-    marginRight: 6,
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
     color: theme.palette.grey['500'],
     fontSize: '1rem',
   },

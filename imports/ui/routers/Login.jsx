@@ -24,7 +24,7 @@ import { ToastMessageContent } from '../components/ToastMessage';
 
 const styles = theme => ({
   root: {
-    marginTop: 100,
+    marginTop: 140,
     width: 320,
   },
   loginContainer: {
@@ -48,8 +48,9 @@ class Login extends React.Component {
     this.setState({showPassword: !this.state.showPassword})
   }
 
-  _handleLogin() {
-    console.log('登录', this.state.email, this.state.password);
+  _handleLogin(e) {
+    e && e.preventDefault();
+
     const {
       email,
       password,
@@ -110,41 +111,48 @@ class Login extends React.Component {
                   ]}
                 />
               </Snackbar>
-              <TextField
-                id="login-email"
-                type="email"
-                label="电子邮箱"
-                margin="normal"
-                value={this.state.email}
-                onChange={(e) => this.setState({email: e.target.value})}
-                />
-              <FormControl
-                margin="normal"
-                >
-                <InputLabel htmlFor="login-password">密码</InputLabel>
-                <Input
-                  id="login-password"
-                  type={this.state.showPassword ? 'text' : 'password'}
-                  value={this.state.password}
-                  onChange={(e) => this.setState({password: e.target.value})}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={() => this._handleClickShowPassword()}
-                        >
-                        {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
+              <form onSubmit={(e) => this._handleLogin(e)} className={classes.loginContainer}>
+                <input name="test"></input>
+                <TextField
+                  id="login-email"
+                  type="email"
+                  label="电子邮箱"
+                  margin="normal"
+                  value={this.state.email}
+                  onChange={(e) => this.setState({email: e.target.value})}
                   />
-              </FormControl>
-              <FormControl
-                margin="normal"
-                >
-                <Button variant="contained" color="primary" onClick={() => this._handleLogin()}>
-                  登录
-                </Button>
-              </FormControl>
+                <FormControl
+                  margin="normal"
+                  >
+                  <InputLabel htmlFor="login-password">密码</InputLabel>
+                  <Input
+                    id="login-password"
+                    type={this.state.showPassword ? 'text' : 'password'}
+                    value={this.state.password}
+                    onChange={(e) => this.setState({password: e.target.value})}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => this._handleClickShowPassword()}
+                          >
+                          {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    />
+                </FormControl>
+                <FormControl
+                  margin="normal"
+                  >
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                  >
+                    登录
+                  </Button>
+                </FormControl>
+              </form>
             </CardContent>
           </Card>
         </Grid>
