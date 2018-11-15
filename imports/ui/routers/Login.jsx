@@ -23,6 +23,10 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { ToastMessageContent } from '../components/ToastMessage';
 
 const styles = theme => ({
+  root: {
+    marginTop: 100,
+    width: 320,
+  },
   loginContainer: {
     display: 'flex',
     flexDirection: 'column'
@@ -77,10 +81,9 @@ class Login extends React.Component {
         direction="row"
         justify="center"
         alignItems="center"
-        className="login"
       >
         <Grid item className="login-container">
-          <Card>
+          <Card className={classes.root}>
             <CardContent className={classes.loginContainer}>
               <h2>登录</h2>
               <Snackbar
@@ -127,7 +130,7 @@ class Login extends React.Component {
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
-                        onClick={this._handleClickShowPassword}
+                        onClick={() => this._handleClickShowPassword()}
                         >
                         {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
                       </IconButton>
