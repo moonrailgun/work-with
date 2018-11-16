@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Blaze from 'meteor/gadicc:blaze-react-component';
 import i18n from 'meteor/universe:i18n';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -8,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
@@ -84,7 +82,7 @@ class Login extends React.Component {
         justify="center"
         alignItems="center"
       >
-        <Grid item className="login-container">
+        <Grid item>
           <Card className={classes.root}>
             <CardContent className={classes.loginContainer}>
               <Typography variant="h5" noWrap>登录</Typography>

@@ -5,6 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import Login from './routers/Login';
 import Register from './routers/Register';
 import Kanban from './routers/Kanban';
+import NotFound from './routers/NotFound';
 import Hello from './Hello.jsx';
 import Info from './Info.jsx';
 import LanguageToggle from './components/LanguageToggle.jsx';
@@ -26,11 +27,16 @@ class App extends React.Component {
   renderRedirect() {
     const { redirectTo, defaultKanban } = this.state;
     const { pathname } = location;
+    const { user } = this.props;
     let redirect = null;
     if (redirectTo && redirectTo !== pathname) {
       redirect = <Redirect to={redirectTo} />
-    } else if(pathname === '/' && defaultKanban) {
-      redirect = <Redirect ro={defaultKanban} />
+    } else if(pathname === '/') {
+      if(defaultKanban) {
+        redirect = <Redirect to={defaultKanban} />
+      }else if(!user) {
+        redirect = <Redirect to="/login" />
+      }
     }
 
     return redirect;
@@ -45,7 +51,8 @@ class App extends React.Component {
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/kanban" component={Kanban} />
+            <Route path="/kanban/:kanbanId?" component={Kanban} />
+            <Route component={NotFound} />
           </Switch>
         </BrowserRouter>
       </div>
@@ -67,5 +74,6 @@ class App extends React.Component {
 
 export default withTracker(() => {
   return {
+    user: Meteor.user(),
   }
 })(App);

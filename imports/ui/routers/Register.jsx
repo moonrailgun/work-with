@@ -99,7 +99,7 @@ class Register extends React.Component {
         justify="center"
         alignItems="center"
       >
-        <Grid item className="login-container">
+        <Grid item>
           <Card className={classes.root}>
             <CardContent className={classes.registerContainer}>
               <Typography variant="h5" noWrap>
