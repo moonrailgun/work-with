@@ -4,6 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 import Login from './routers/Login';
 import Register from './routers/Register';
+import Dashboard from './routers/Dashboard';
 import Kanban from './routers/Kanban';
 import NotFound from './routers/NotFound';
 import Hello from './Hello.jsx';
@@ -51,6 +52,7 @@ class App extends React.Component {
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
+            <Route path="/dashboard" component={Dashboard} />
             <Route path="/kanban/:kanbanId?" component={Kanban} />
             <Route component={NotFound} />
           </Switch>
