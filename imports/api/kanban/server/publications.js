@@ -5,22 +5,18 @@ import { Kanban } from '../kanban.js';
 Meteor.publish('kanban.all', function() {
   const { userId } = this;
 
-  return {
-    find() {
-      if(!userId) {
-        return this.ready();
-      }
-
-      const query = {
-        $or: [
-          { userId },
-          {
-            members: userId
-          }
-        ]
-      }
-
-      return Kanban.find(query)
-    }
+  if(!userId) {
+    return this.ready();
   }
+
+  const query = {
+    $or: [
+      { userId },
+      {
+        members: userId
+      }
+    ]
+  }
+
+  return Kanban.find(query)
 });

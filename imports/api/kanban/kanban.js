@@ -5,7 +5,7 @@ class KanbanCollection extends Mongo.Collection {
 
 }
 
-export const Kanban = new KanbanCollection('Kanban');
+export const Kanban = new KanbanCollection('kanban');
 
 Kanban.deny({
   insert() { return true; },
