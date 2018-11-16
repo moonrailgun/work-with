@@ -28,6 +28,9 @@ const styles = theme => ({
   grow: {
     flexGrow: 1,
   },
+  noShrink: {
+    flexShrink: 0,
+  },
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
@@ -106,12 +109,13 @@ class NavBar extends React.Component {
 
   renderUserInfo() {
     const {
-      user
+      user,
+      classes,
     } = this.props;
 
     if(user) {
       return (
-        <div>
+        <div className={classes.noShrink}>
           <IconButton color="inherit">
             <Badge badgeContent={4} color="secondary">
               <MailIcon />
