@@ -1,32 +1,57 @@
 import React from 'react';
 
+import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardActionArea from '@material-ui/core/CardActionArea';
+
+const styles = theme => ({
+  root: {
+    height: 96,
+  },
+  actionArea: {
+    padding: 8,
+    width: '100%',
+    height: '100%',
+  },
+  content: {
+    padding: 0,
+    height: '100%',
+    overflowWrap: 'break-word',
+  },
+  newCard: {
+    padding: 0,
+    textAlign: 'center',
+  }
+})
 
 class KanbanItem extends React.Component {
   render() {
     const {
+      classes,
       isNew = false,
       title,
       onClick,
     } = this.props;
 
     return (
-      <Card onClick={onClick}>
-        {
-          isNew ? (
-            <CardContent>
-              创建新看板
-            </CardContent>
-          ) : (
-            <CardContent>
-              {title}
-            </CardContent>
-          )
-        }
+      <Card onClick={onClick} className={classes.root}>
+        <CardActionArea className={classes.actionArea}>
+          {
+            isNew ? (
+              <CardContent className={classes.newCard}>
+                创建新看板
+              </CardContent>
+            ) : (
+              <CardContent className={classes.content}>
+                {title}
+              </CardContent>
+            )
+          }
+        </CardActionArea>
       </Card>
     )
   }
 }
 
-export default KanbanItem;
+export default withStyles(styles)(KanbanItem);

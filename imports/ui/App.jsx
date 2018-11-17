@@ -12,6 +12,8 @@ import Info from './Info.jsx';
 import LanguageToggle from './components/LanguageToggle.jsx';
 import NavBar from './components/NavBar.jsx';
 
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 // i18n.setLocale('zh-CN');
 //
 // console.log(i18n.getLocale())
@@ -46,6 +48,7 @@ class App extends React.Component {
   renderContent() {
     return (
       <div>
+        <CssBaseline />
         <LanguageToggle />
         <NavBar />
         <BrowserRouter>
