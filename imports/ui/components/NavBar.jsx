@@ -20,6 +20,12 @@ import RefreshIcon from '@material-ui/icons/Refresh';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const styles = theme => ({
   root: {
@@ -89,6 +95,25 @@ const styles = theme => ({
 })
 
 class NavBar extends React.Component {
+  state = {
+    openDrawer: false,
+  }
+
+  renderDrawer() {
+    return (
+      <Drawer open={this.state.openDrawer} onClose={() => this.setState({openDrawer: false})}>
+        <div
+          tabIndex={0}
+          role="button"
+          onClick={() => this.setState({openDrawer: false})}
+          onKeyDown={() => this.setState({openDrawer: false})}
+        >
+          侧边栏
+        </div>
+      </Drawer>
+    )
+  }
+
   renderNetworkInfo() {
     const {
       connected,
@@ -139,9 +164,14 @@ class NavBar extends React.Component {
 
     return (
       <div>
+        {this.renderDrawer()}
         <AppBar position="static">
           <Toolbar>
-            <IconButton color="inherit" className={classes.menuButton}>
+            <IconButton
+              className={classes.menuButton}
+              color="inherit"
+              onClick={() => this.setState({openDrawer: true})}
+            >
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" color="inherit" noWrap>
