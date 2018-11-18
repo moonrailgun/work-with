@@ -22,7 +22,7 @@ class Dashboard extends React.Component {
   }
 
   _handleClickKanbanItem(kanbanId) {
-    console.log('打开看板', kanbanId);
+    this.props.history.push(`/kanban/${kanbanId}`);
   }
 
   render() {
@@ -63,8 +63,6 @@ class Dashboard extends React.Component {
     )
   }
 }
-
-console.log('Kanban', Kanban);
 
 export default withTracker(() => {
   const allKanbanHandler = Meteor.subscribe('kanban.all');

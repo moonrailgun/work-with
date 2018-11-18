@@ -11,15 +11,19 @@ class KanbanContainer extends React.Component {
     return (
       <div>
         当前看板信息:
-        {JSON.stringify(this.props.allKanban)}
+        {JSON.stringify(this.props.kanbanInfo)}
       </div>
     )
   }
 }
 
+console.log('kanban', Kanban);
+
 export default withTracker(({match}) => {
   const kanbanId = match.params.kanbanId;
+  const allKanbanHandler = Meteor.subscribe('kanban.all')
   return {
-    allKanban: Meteor.subscribe('kanban.all'),
+    loading: !allKanbanHandler.ready(),
+    kanbanInfo: Kanban.find(kanbanId).fetch()[0],
   }
 })(KanbanContainer);
