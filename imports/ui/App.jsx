@@ -31,6 +31,7 @@ class App extends React.Component {
     const { redirectTo, defaultKanban } = this.state;
     const { pathname } = location;
     const { user } = this.props;
+
     let redirect = null;
     if (redirectTo && redirectTo !== pathname) {
       redirect = <Redirect to={redirectTo} />
@@ -50,15 +51,17 @@ class App extends React.Component {
       <div>
         <CssBaseline />
         <LanguageToggle />
-        <NavBar />
         <BrowserRouter>
-          <Switch>
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/kanban/:kanbanId?" component={Kanban} />
-            <Route component={NotFound} />
-          </Switch>
+          <div>
+            <Route component={NavBar}></Route>
+            <Switch>
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/kanban/:kanbanId?" component={Kanban} />
+              <Route component={NotFound} />
+            </Switch>
+          </div>
         </BrowserRouter>
       </div>
     )

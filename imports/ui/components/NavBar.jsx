@@ -97,6 +97,20 @@ const styles = theme => ({
 class NavBar extends React.Component {
   state = {
     openDrawer: false,
+    openAccountMenu: false,
+  }
+
+  _handleLogout() {
+    Meteor.logout((err) => {
+      if(err) {
+        console.error(err);
+        alert('登出失败:' + err.toString())
+        return;
+      }
+
+      this.props.history.push('/');
+    })
+    this.setState({accountAnchorEl: null});
   }
 
   renderDrawer() {
@@ -151,6 +165,27 @@ class NavBar extends React.Component {
               <NotificationsIcon />
             </Badge>
           </IconButton>
+          <IconButton
+            onClick={(e) => this.setState({accountAnchorEl: e.currentTarget})}
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
+          <Menu
+            anchorEl={this.state.accountAnchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={!!this.state.accountAnchorEl}
+            onClose={() => this.setState({accountAnchorEl: null})}
+          >
+            <MenuItem onClick={() => this._handleLogout()}>退出登录</MenuItem>
+          </Menu>
         </div>
       )
     }

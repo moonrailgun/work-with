@@ -63,7 +63,7 @@ class Login extends React.Component {
         });
       }else {
         console.log('登录成功')
-        this.props.history.push('/kanban');
+        this.props.history.push('/'); // 回到首页
       }
     })
   }
