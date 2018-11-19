@@ -25,33 +25,31 @@ const styles = theme => ({
   }
 })
 
-class KanbanItem extends React.Component {
-  render() {
-    const {
-      classes,
-      isNew = false,
-      title,
-      onClick,
-    } = this.props;
+function KanbanItem (props) {
+  const {
+    classes,
+    isNew = false,
+    title,
+    onClick,
+  } = this.props;
 
-    return (
-      <Card onClick={onClick} className={classes.root}>
-        <CardActionArea className={classes.actionArea}>
-          {
-            isNew ? (
-              <CardContent className={classes.newCard}>
-                创建新看板
-              </CardContent>
-            ) : (
-              <CardContent className={classes.content}>
-                {title}
-              </CardContent>
-            )
-          }
-        </CardActionArea>
-      </Card>
-    )
-  }
+  return (
+    <Card onClick={onClick} className={classes.root}>
+      <CardActionArea className={classes.actionArea}>
+        {
+          isNew ? (
+            <CardContent className={classes.newCard}>
+              创建新看板
+            </CardContent>
+          ) : (
+            <CardContent className={classes.content}>
+              {title}
+            </CardContent>
+          )
+        }
+      </CardActionArea>
+    </Card>
+  )
 }
 
 export default withStyles(styles)(KanbanItem);
