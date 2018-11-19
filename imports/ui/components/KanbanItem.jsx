@@ -31,7 +31,7 @@ function KanbanItem (props) {
     isNew = false,
     title,
     onClick,
-  } = this.props;
+  } = props;
 
   return (
     <Card onClick={onClick} className={classes.root}>
