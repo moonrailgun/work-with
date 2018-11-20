@@ -113,6 +113,11 @@ class NavBar extends React.Component {
     this.setState({accountAnchorEl: null});
   }
 
+  _handleBackToDashboard() {
+     this.props.history.push('/dashboard')
+     this.setState({accountAnchorEl: null});
+  }
+
   renderDrawer() {
     return (
       <Drawer open={this.state.openDrawer} onClose={() => this.setState({openDrawer: false})}>
@@ -184,6 +189,7 @@ class NavBar extends React.Component {
             open={!!this.state.accountAnchorEl}
             onClose={() => this.setState({accountAnchorEl: null})}
           >
+            <MenuItem onClick={() => this._handleBackToDashboard()}>我的首页</MenuItem>
             <MenuItem onClick={() => this._handleLogout()}>退出登录</MenuItem>
           </Menu>
         </div>
