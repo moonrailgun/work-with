@@ -1,8 +1,24 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { KanbanColumn } from './kanbanColumn';
+import { _ } from 'meteor/erasaur:meteor-lodash';
 
 class KanbanCollection extends Mongo.Collection {
+  insert(doc, callback) {
+    const ourDoc = doc;
+    ourDoc.createdAt = ourDoc.createdAt || new Date();
+    const result = super.insert(ourDoc, callback);
+    return result;
+  }
 
+  remove(selector) {
+    const kanbans = this.find(selector).fetch();
+    const result = super.remove(selector);
+    let or = _.flatten(kanbans.map(x => x.cols || [])).map(x => ({_id: x}));
+    console.log('remove kanban column by', or);
+    KanbanColumn.remove({$or: or});
+    return result;
+  }
 }
 
 export const Kanban = new KanbanCollection('kanban');
@@ -31,9 +47,8 @@ Kanban.schema = new SimpleSchema({
     ],
     defaultValue: 'public',
   },
-  columnList: {
+  cols: {
     type: [String],
-    defaultValue: [],
     regEx: SimpleSchema.RegEx.Id,
   },
   teamId: {

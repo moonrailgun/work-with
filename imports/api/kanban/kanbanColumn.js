@@ -1,6 +1,10 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
+class Card {
+  content: ''
+}
+
 class KanbanColumnCollection extends Mongo.Collection {
 
 }
@@ -14,6 +18,9 @@ KanbanColumn.deny({
 });
 
 KanbanColumn.schema = new SimpleSchema({
+  title: {
+    type: String
+  },
   cards: {
     type: [Card],
     defaultValue: [],
@@ -25,7 +32,3 @@ KanbanColumn.schema = new SimpleSchema({
 });
 
 KanbanColumn.attachSchema(KanbanColumn.schema);
-
-class Card {
-  content: ''
-}
