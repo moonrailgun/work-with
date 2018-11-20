@@ -1,8 +1,9 @@
 import React from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Kanban } from '/imports/api/kanban/kanban';
+import KanbanContainer from '/imports/ui/components/KanbanContainer';
 
-class KanbanContainer extends React.Component {
+class KanbanRoute extends React.Component {
   render() {
     const {
       params
@@ -12,6 +13,9 @@ class KanbanContainer extends React.Component {
       <div>
         当前看板信息:
         {JSON.stringify(this.props.kanbanInfo)}
+        <div>
+          <KanbanContainer />
+        </div>
       </div>
     )
   }
@@ -26,4 +30,4 @@ export default withTracker(({match}) => {
     loading: !allKanbanHandler.ready(),
     kanbanInfo: Kanban.find(kanbanId).fetch()[0],
   }
-})(KanbanContainer);
+})(KanbanRoute);
