@@ -1,28 +1,43 @@
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
+import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-const grid = 8;
-
 const getListStyle = isDraggingOver => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
-  padding: grid,
-  width: 250
+  // outline: isDraggingOver ? 1 : 0,
 });
 
 const getItemStyle = (isDragging, draggableStyle) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: 'none',
-  padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
-
-  // change background colour if dragging
-  background: isDragging ? 'lightgreen' : 'grey',
-
-  // styles we need to apply on draggables
-  ...draggableStyle
+  ...draggableStyle,
 });
+
+const styles = ({shape, spacing, palette, shadows}) => ({
+  root: {
+    padding: spacing.unit,
+    overflow: 'auto',
+  },
+  gridItem: {
+    flexShrink: 0,
+  },
+  col: {
+    borderRadius: shape.borderRadius,
+    padding: spacing.unit,
+    backgroundColor: '#dfe3e6',
+    boxShadow: shadows[2],
+  },
+  card: {
+    borderRadius: shape.borderRadius,
+    marginBottom: spacing.unit,
+    padding: spacing.unit * 2,
+    userSelect: 'none',
+    backgroundColor: palette.common.white,
+    boxShadow: 'none',
+    '&:hover, &:active': {
+      boxShadow: shadows[1],
+    }
+  }
+})
 
 class KanbanContainer extends React.Component {
   state = {
@@ -34,6 +49,27 @@ class KanbanContainer extends React.Component {
         content: 'test11231'
       }]
     }, {
+      _id: '122',
+      title: '处理中',
+      cards: [{
+        _id: "12314",
+        content: '1eede'
+      }]
+    }, {
+      _id: '1221dd',
+      title: '处理中1',
+      cards: [{
+        _id: "123149",
+        content: '1eeacde'
+      }]
+    }, {
+      _id: '12222',
+      title: '处理中2',
+      cards: [{
+        _id: "12314qq",
+        content: '1ewdede'
+      }]
+    }, {
       _id: '22',
       title: 'DONE',
       cards: [{
@@ -43,7 +79,20 @@ class KanbanContainer extends React.Component {
     }]
   }
 
+  _handleDropEnd(result) {
+    const { source, destination } = result;
+    if(!destination) {
+      return;
+    }
+
+    console.log('source, destination', source, destination);
+  }
+
   renderCards(cards) {
+    const {
+      classes,
+    } = this.props;
+
     return cards.map((card, index) => (
       <Draggable
         key={card._id}
@@ -54,6 +103,7 @@ class KanbanContainer extends React.Component {
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
+            className={classes.card}
             style={getItemStyle(
                 snapshot.isDragging,
                 provided.draggableProps.style
@@ -67,32 +117,40 @@ class KanbanContainer extends React.Component {
   }
 
   render() {
+    const {
+      classes,
+    } = this.props;
+
     return (
-      <DragDropContext>
-        <Grid container spacing={16}>
-          {
-            this.state.cols.map((col, index) => (
-              <Grid item key={col._id}>
-                <Droppable droppableId={col._id}>
-                  {
-                    (provided, snapshot) => (
-                      <div
-                        ref={provided.innerRef}
-                        style={getListStyle(snapshot.isDraggingOver)}
-                      >
-                        { this.renderCards(col.cards) }
-                        { provided.placeholder }
-                      </div>
-                    )
-                  }
-                </Droppable>
-              </Grid>
-            ))
-          }
-        </Grid>
-      </DragDropContext>
+      <div className={classes.root}>
+        <DragDropContext onDragEnd={(res) => this._handleDropEnd(res)}>
+          <Grid container spacing={16} wrap={'nowrap'}>
+            {
+              this.state.cols.map((col, index) => (
+                <Grid item key={col._id} xs={3} className={classes.gridItem}>
+                  <Droppable droppableId={col._id}>
+                    {
+                      (provided, snapshot) => (
+                        <div
+                          ref={provided.innerRef}
+                          className={classes.col}
+                          style={getListStyle(snapshot.isDraggingOver)}
+                          >
+                          <div>{col.title}</div>
+                          { this.renderCards(col.cards) }
+                          { provided.placeholder }
+                        </div>
+                      )
+                    }
+                  </Droppable>
+                </Grid>
+              ))
+            }
+          </Grid>
+        </DragDropContext>
+      </div>
     )
   }
 }
 
-export default KanbanContainer;
+export default withStyles(styles)(KanbanContainer);
