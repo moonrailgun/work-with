@@ -150,7 +150,7 @@ class KanbanContainer extends React.Component {
                 </KanbanColumn>
               ))
             }
-            <KanbanColumn newCol />
+            <KanbanColumn newCol onAddNew={(data) => this._handleAddCol(data)} />
           </DragDropContext>
         </Grid>
       </div>
