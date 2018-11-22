@@ -1,8 +1,12 @@
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import classNames from 'classnames';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
 
 const getListStyle = isDraggingOver => ({
   // outline: isDraggingOver ? 1 : 0,
@@ -25,6 +29,11 @@ const styles = ({shape, spacing, palette, shadows}) => ({
     padding: spacing.unit,
     backgroundColor: '#dfe3e6',
     boxShadow: shadows[2],
+  },
+  colAdd: {
+    padding: 0,
+    backgroundColor: 'rgba(0,0,0,.24)',
+    color: palette.common.white,
   },
   card: {
     borderRadius: shape.borderRadius,
@@ -88,6 +97,10 @@ class KanbanContainer extends React.Component {
     console.log('source, destination', source, destination);
   }
 
+  _handleAddCol() {
+    console.log('TODO: 增加新列');
+  }
+
   renderCards(cards) {
     const {
       classes,
@@ -123,11 +136,11 @@ class KanbanContainer extends React.Component {
 
     return (
       <div className={classes.root}>
-        <DragDropContext onDragEnd={(res) => this._handleDropEnd(res)}>
-          <Grid container spacing={16} wrap={'nowrap'}>
+        <Grid container spacing={16} wrap={'nowrap'}>
+          <DragDropContext onDragEnd={(res) => this._handleDropEnd(res)}>
             {
               this.state.cols.map((col, index) => (
-                <Grid item key={col._id} xs={3} className={classes.gridItem}>
+                <Grid item key={col._id} xs={12} sm={3} md={2} className={classes.gridItem}>
                   <Droppable droppableId={col._id}>
                     {
                       (provided, snapshot) => (
@@ -136,7 +149,7 @@ class KanbanContainer extends React.Component {
                           className={classes.col}
                           style={getListStyle(snapshot.isDraggingOver)}
                           >
-                          <div>{col.title}</div>
+                          <Typography gutterBottom>{col.title}</Typography>
                           { this.renderCards(col.cards) }
                           { provided.placeholder }
                         </div>
@@ -146,8 +159,13 @@ class KanbanContainer extends React.Component {
                 </Grid>
               ))
             }
-          </Grid>
-        </DragDropContext>
+            <Grid item xs={12} sm={3} md={2} className={classes.gridItem}>
+              <div className={classNames(classes.col, classes.colAdd)}>
+                <Button fullWidth onClick={() => this._handleAddCol()}><AddIcon />添加另一个列表</Button>
+              </div>
+            </Grid>
+          </DragDropContext>
+        </Grid>
       </div>
     )
   }
