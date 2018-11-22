@@ -1,12 +1,11 @@
 import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
+import KanbanColumn from './KanbanColumn';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 
 const getListStyle = isDraggingOver => ({
   // outline: isDraggingOver ? 1 : 0,
@@ -21,19 +20,11 @@ const styles = ({shape, spacing, palette, shadows}) => ({
     padding: spacing.unit,
     overflow: 'auto',
   },
-  gridItem: {
-    flexShrink: 0,
-  },
   col: {
     borderRadius: shape.borderRadius,
     padding: spacing.unit,
     backgroundColor: '#dfe3e6',
     boxShadow: shadows[2],
-  },
-  colAdd: {
-    padding: 0,
-    backgroundColor: 'rgba(0,0,0,.24)',
-    color: palette.common.white,
   },
   card: {
     borderRadius: shape.borderRadius,
@@ -140,7 +131,7 @@ class KanbanContainer extends React.Component {
           <DragDropContext onDragEnd={(res) => this._handleDropEnd(res)}>
             {
               this.state.cols.map((col, index) => (
-                <Grid item key={col._id} xs={12} sm={3} md={2} className={classes.gridItem}>
+                <KanbanColumn key={col._id}>
                   <Droppable droppableId={col._id}>
                     {
                       (provided, snapshot) => (
@@ -148,7 +139,7 @@ class KanbanContainer extends React.Component {
                           ref={provided.innerRef}
                           className={classes.col}
                           style={getListStyle(snapshot.isDraggingOver)}
-                          >
+                        >
                           <Typography gutterBottom>{col.title}</Typography>
                           { this.renderCards(col.cards) }
                           { provided.placeholder }
@@ -156,14 +147,10 @@ class KanbanContainer extends React.Component {
                       )
                     }
                   </Droppable>
-                </Grid>
+                </KanbanColumn>
               ))
             }
-            <Grid item xs={12} sm={3} md={2} className={classes.gridItem}>
-              <div className={classNames(classes.col, classes.colAdd)}>
-                <Button fullWidth onClick={() => this._handleAddCol()}><AddIcon />添加另一个列表</Button>
-              </div>
-            </Grid>
+            <KanbanColumn newCol />
           </DragDropContext>
         </Grid>
       </div>
