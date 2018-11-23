@@ -5,8 +5,11 @@ import Grid from '@material-ui/core/Grid';
 import Grow from '@material-ui/core/Grow';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
+import ClearIcon from '@material-ui/icons/Clear';
 
 const styles = ({shape, spacing, shadows, palette}) => ({
   gridItem: {
@@ -43,7 +46,15 @@ class KanbanColumn extends React.Component {
       <ClickAwayListener onClickAway={() => this.setState({isAddNew: false})}>
         <Grow in={this.state.isAddNew}>
           <Paper className={classes.colAddGrow} elevation={4}>
-            <div>这里是需要输入的菜单项</div>
+            <TextField
+              placeholder="输入列表标题..."
+              fullWidth
+              margin="none"
+            />
+            <Button>添加列表</Button>
+            <IconButton>
+              <ClearIcon />
+            </IconButton>
           </Paper>
         </Grow>
       </ClickAwayListener>
