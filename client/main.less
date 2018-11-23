@@ -1,11 +1,26 @@
 html, body {
   min-height: 100%;
+  height: 100%;
   background-image: url('/images/bg.jpg');
 }
 
 body {
   padding: 0;
   margin: 0;
+}
+
+#react-target {
+  height: 100%;
+
+  > div {
+    height: 100%;
+  }
+}
+
+#basic-route {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 // @import '{}/imports/ui/routers/Login.less';

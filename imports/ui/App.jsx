@@ -52,7 +52,7 @@ class App extends React.Component {
         <CssBaseline />
         <LanguageToggle />
         <BrowserRouter>
-          <div>
+          <div id="basic-route">
             <Route component={NavBar}></Route>
             <Switch>
               <Route path="/login" component={Login} />

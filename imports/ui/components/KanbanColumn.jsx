@@ -24,8 +24,9 @@ const styles = ({shape, spacing, shadows, palette}) => ({
     position: 'absolute',
     top: spacing.unit,
     left: spacing.unit,
-    right: spacing.unit
-  }
+    right: spacing.unit,
+    padding: spacing.unit * 2,
+  },
 })
 
 class KanbanColumn extends React.Component {
