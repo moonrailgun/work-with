@@ -23,13 +23,14 @@ class KanbanRoute extends React.Component {
       classes,
     } = this.props;
     const { kanbanId } = match.params;
+    const { kanbanInfo } = this.props;
 
     return (
       <div className={classes.root}>
         当前看板信息:
         {JSON.stringify(this.props.kanbanInfo)}
         <div className={classes.kanbanContainer}>
-          <KanbanContainer />
+          <KanbanContainer kanbanId={kanbanId} />
         </div>
       </div>
     )

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -35,6 +36,26 @@ const styles = ({shape, spacing, shadows, palette}) => ({
 class KanbanColumn extends React.Component {
   state = {
     isAddNew: false,
+    newColumnTitle: '',
+  }
+
+  _handleCancelAdd(clearText = false) {
+    this.setState({isAddNew: false});
+    if(clearText) {
+      this.setState({newColumnTitle: ''});
+    }
+  }
+
+  _handleAddColumn() {
+    const {
+      newColumnTitle
+    } = this.state;
+    if(!newColumnTitle) {
+      return;
+    }
+
+    this.props.onAddNew(newColumnTitle);
+    this.setState({isAddNew: false});
   }
 
   renderColAdd() {
@@ -43,16 +64,18 @@ class KanbanColumn extends React.Component {
     } = this.props;
 
     return (
-      <ClickAwayListener onClickAway={() => this.setState({isAddNew: false})}>
+      <ClickAwayListener onClickAway={() => this._handleCancelAdd()}>
         <Grow in={this.state.isAddNew}>
           <Paper className={classes.colAddGrow} elevation={4}>
             <TextField
               placeholder="输入列表标题..."
               fullWidth
               margin="none"
+              value={this.state.newColumnTitle}
+              onChange={e => this.setState({newColumnTitle: e.target.value})}
             />
-            <Button>添加列表</Button>
-            <IconButton>
+          <Button onClick={() => this._handleAddColumn()}>添加列表</Button>
+            <IconButton onClick={() => this._handleCancelAdd(true)}>
               <ClearIcon />
             </IconButton>
           </Paper>
@@ -94,5 +117,9 @@ class KanbanColumn extends React.Component {
     }
   }
 }
+
+KanbanColumn.propTypes = {
+  newCol: PropTypes.bool,
+};
 
 export default withStyles(styles)(KanbanColumn);

@@ -1,7 +1,9 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 import KanbanColumn from './KanbanColumn';
+import { addKanbanColumn } from '/imports/api/kanban/methods';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -90,8 +92,16 @@ class KanbanContainer extends React.Component {
     console.log('source, destination', source, destination);
   }
 
-  _handleAddCol() {
-    console.log('TODO: 增加新列');
+  _handleAddCol(title) {
+    const {
+      kanbanId,
+    } = this.props;
+
+    addKanbanColumn.call({ title, kanbanId }, (err) => {
+      if(err) {
+        console.error('新增失败', err);
+      }
+    })
   }
 
   renderCards(cards) {
@@ -152,12 +162,16 @@ class KanbanContainer extends React.Component {
                 </KanbanColumn>
               ))
             }
-            <KanbanColumn newCol onAddNew={(data) => this._handleAddCol(data)} />
+            <KanbanColumn newCol onAddNew={(title) => this._handleAddCol(title)} />
           </DragDropContext>
         </Grid>
       </div>
     )
   }
 }
+
+KanbanContainer.propTypes = {
+  kanbanId: PropTypes.string.isRequired,
+};
 
 export default withStyles(styles)(KanbanContainer);

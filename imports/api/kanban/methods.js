@@ -5,6 +5,7 @@ import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { _ } from 'meteor/erasaur:meteor-lodash';
 
 import { Kanban } from './kanban';
+import { KanbanColumn } from './kanbanColumn';
 
 export const insert = new ValidatedMethod({
   name: 'kanban.insert',
@@ -34,8 +35,34 @@ export const insert = new ValidatedMethod({
   }
 })
 
+export const addKanbanColumn = new ValidatedMethod({
+  name: 'kanban.insertColumn',
+  validate: new SimpleSchema({
+    title: {
+      type: String,
+    },
+    kanbanId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id,
+    }
+  }).validator(),
+  run({title, kanbanId}) {
+    console.log(title, kanbanId);
+
+    const newColId = KanbanColumn.insert({
+      title,
+      kanbanId,
+    })
+
+    return Kanban.update(kanbanId, {
+      $push: {cols: newColId},
+    })
+  }
+})
+
 const ALLOW_METHODS = _.map([
   insert,
+  addKanbanColumn,
 ], 'name');
 
 if(Meteor.isServer) {
