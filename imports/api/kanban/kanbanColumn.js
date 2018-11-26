@@ -9,7 +9,7 @@ class KanbanColumnCollection extends Mongo.Collection {
 
 }
 
-export const KanbanColumn = new KanbanColumnCollection('kanban_detail');
+export const KanbanColumn = new KanbanColumnCollection('kanban_column');
 
 KanbanColumn.deny({
   insert() { return true; },
