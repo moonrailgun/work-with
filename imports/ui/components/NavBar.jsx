@@ -131,11 +131,23 @@ class NavBar extends React.Component {
       classes,
       userId,
       kanbanList,
+      history,
     } = this.props;
+
+    let currentKanbanId = '';
+    let pathname = history.location.pathname;
+    if(pathname.indexOf('/kanban/') >= 0) {
+      currentKanbanId = pathname.substr(8);
+    }
 
     const listItemFn = (item) => {
       return (
-        <ListItem button key={item._id} onClick={() => this._handleSwitchKanban(item._id)}>
+        <ListItem
+          key={item._id}
+          button
+          selected={item._id === currentKanbanId}
+          onClick={() => this._handleSwitchKanban(item._id)}
+        >
           <ListItemText primary={item.title} />
         </ListItem>
       )
