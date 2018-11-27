@@ -50,6 +50,7 @@ Kanban.schema = new SimpleSchema({
   cols: {
     type: [String],
     regEx: SimpleSchema.RegEx.Id,
+    defaultValue: [],
   },
   teamId: {
     type: String,

@@ -22,16 +22,30 @@ export const insert = new ValidatedMethod({
       ],
     }
   }).validator(),
-  run({ title, visibility }) {
+  run({ title, visibility, template = 'base' }) {
     let userId = this.userId;
 
-    return Kanban.insert({
+    let kanbanId = Kanban.insert({
       title,
       userId,
       members: [userId],
       visibility,
       createdAt: new Date(),
+    });
+
+    let defaultCols = [];
+    if(template === 'base') {
+      defaultCols = ['待处理', '处理中', '已完成'];
+    }
+
+    let cols = defaultCols.map((n) => {
+      return KanbanColumn.insert({title: n, kanbanId});
     })
+    Kanban.update(kanbanId, {
+      $set: {cols: cols}
+    });
+
+    return kanbanId;
   }
 })
 
