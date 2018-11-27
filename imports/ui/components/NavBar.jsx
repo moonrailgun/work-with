@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { Kanban } from '/imports/api/kanban/kanban';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -22,9 +23,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
+import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
 const styles = theme => ({
@@ -92,6 +92,9 @@ const styles = theme => ({
       },
     },
   },
+  drawer: {
+    maxWidth: 280,
+  }
 })
 
 class NavBar extends React.Component {
@@ -114,20 +117,54 @@ class NavBar extends React.Component {
   }
 
   _handleBackToDashboard() {
-     this.props.history.push('/dashboard')
-     this.setState({accountAnchorEl: null});
+    this.props.history.push('/dashboard');
+    this.setState({accountAnchorEl: null});
+  }
+
+  _handleSwitchKanban(kanbanId) {
+    console.log('跳转到看板', kanbanId);
+    kanbanId && this.props.history.push(`/kanban/${kanbanId}`);
   }
 
   renderDrawer() {
+    const {
+      classes,
+      userId,
+      kanbanList,
+    } = this.props;
+
+    const listItemFn = (item) => {
+      return (
+        <ListItem button key={item._id} onClick={() => this._handleSwitchKanban(item._id)}>
+          <ListItemText primary={item.title} />
+        </ListItem>
+      )
+    }
+
     return (
-      <Drawer open={this.state.openDrawer} onClose={() => this.setState({openDrawer: false})}>
+      <Drawer
+        className={classes.drawer}
+        open={this.state.openDrawer}
+        onClose={() => this.setState({openDrawer: false})}
+      >
         <div
           tabIndex={0}
           role="button"
           onClick={() => this.setState({openDrawer: false})}
           onKeyDown={() => this.setState({openDrawer: false})}
         >
-          侧边栏
+          <List
+            component="nav"
+          >
+            <ListSubheader component="div">我的看板</ListSubheader>
+            {
+              kanbanList.filter(x => x.userId === userId).map(listItemFn)
+            }
+            <ListSubheader component="div">团队看板</ListSubheader>
+            {
+              kanbanList.filter(x => x.userId !== userId).map(listItemFn)
+            }
+          </List>
         </div>
       </Drawer>
     )
@@ -241,8 +278,17 @@ class NavBar extends React.Component {
 }
 
 export default withTracker(() => {
+  let userId = Meteor.userId();
+
   return {
     user: Meteor.user(),
+    userId,
     connected: Meteor.status().connected,
+    kanbanList: Kanban.find({
+      $or: [
+        { userId: userId },
+        { members: userId }
+      ]
+    }).fetch(),
   }
 })(withStyles(styles)(NavBar))
