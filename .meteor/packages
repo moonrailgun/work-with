@@ -31,3 +31,4 @@ aldeed:simple-schema
 aldeed:collection2
 dburles:collection-helpers
 less
+meteorhacks:aggregate
