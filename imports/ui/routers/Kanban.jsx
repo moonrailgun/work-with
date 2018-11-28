@@ -22,17 +22,16 @@ class KanbanRoute extends React.Component {
     const {
       match,
       classes,
+      kanbanInfo,
+      kanbanCols,
     } = this.props;
     const { kanbanId } = match.params;
-    const { kanbanInfo } = this.props;
 
     return (
       <div className={classes.root}>
-        当前看板信息:
-        {JSON.stringify(this.props.kanbanInfo)}
-        {JSON.stringify(this.props.kanbanCols)}
+        <div><h3>{kanbanInfo.title}</h3></div>
         <div className={classes.kanbanContainer}>
-          <KanbanContainer kanbanId={kanbanId} />
+          <KanbanContainer kanbanId={kanbanId} kanbanCols={kanbanCols} />
         </div>
       </div>
     )
@@ -43,7 +42,7 @@ const route = withTracker(({match}) => {
   const kanbanId = match.params.kanbanId;
   const allKanbanHandler = Meteor.subscribe('kanban.all');
   const allKanbanColsHandler = Meteor.subscribe('kanban.cols.all', { kanbanId });
-  const kanbanInfo = Kanban.find(kanbanId).fetch()[0];
+  const kanbanInfo = Kanban.find(kanbanId).fetch()[0] || {};
   let kanbanCols = [];
   if(kanbanInfo && kanbanInfo.cols) {
     // 这里有个排序

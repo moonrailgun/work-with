@@ -135,6 +135,7 @@ class KanbanContainer extends React.Component {
   render() {
     const {
       classes,
+      kanbanCols,
     } = this.props;
 
     return (
@@ -142,7 +143,7 @@ class KanbanContainer extends React.Component {
         <Grid container spacing={16} wrap={'nowrap'}>
           <DragDropContext onDragEnd={(res) => this._handleDropEnd(res)}>
             {
-              this.state.cols.map((col, index) => (
+              kanbanCols.map((col, index) => (
                 <KanbanColumn key={col._id}>
                   <Droppable droppableId={col._id}>
                     {
