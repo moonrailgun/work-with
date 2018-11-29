@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -7,15 +8,30 @@ import Grow from '@material-ui/core/Grow';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import ClearIcon from '@material-ui/icons/Clear';
 
+const getListStyle = isDraggingOver => ({
+  // outline: isDraggingOver ? 1 : 0,
+});
+
+const getItemStyle = (isDragging, draggableStyle) => ({
+  ...draggableStyle,
+});
+
 const styles = ({shape, spacing, shadows, palette}) => ({
   gridItem: {
     flexShrink: 0,
     position: 'relative',
+  },
+  col: {
+    borderRadius: shape.borderRadius,
+    padding: spacing.unit,
+    backgroundColor: '#dfe3e6',
+    boxShadow: shadows[2],
   },
   colAdd: {
     borderRadius: shape.borderRadius,
@@ -58,6 +74,34 @@ class KanbanColumn extends React.Component {
     this.setState({isAddNew: false});
   }
 
+  renderCards(cards) {
+    const {
+      classes,
+    } = this.props;
+
+    return cards.map((card, index) => (
+      <Draggable
+        key={card._id}
+        draggableId={card._id}
+        index={index}>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            className={classes.card}
+            style={getItemStyle(
+                snapshot.isDragging,
+                provided.draggableProps.style
+            )}
+          >
+            {card.content}
+          </div>
+        )}
+      </Draggable>
+    ))
+  }
+
   renderColAdd() {
     const {
       classes,
@@ -89,6 +133,7 @@ class KanbanColumn extends React.Component {
       newCol = false,
       children,
       classes,
+      col,
     } = this.props;
 
     const gridProps = {
@@ -103,6 +148,21 @@ class KanbanColumn extends React.Component {
       return (
         <Grid {...gridProps}>
           {children}
+          <Droppable droppableId={col._id}>
+            {
+              (provided, snapshot) => (
+                <div
+                  ref={provided.innerRef}
+                  className={classes.col}
+                  style={getListStyle(snapshot.isDraggingOver)}
+                >
+                  <Typography gutterBottom>{col.title}</Typography>
+                  { this.renderCards(col.cards) }
+                  { provided.placeholder }
+                </div>
+              )
+            }
+          </Droppable>
         </Grid>
       )
     }else {
@@ -120,6 +180,7 @@ class KanbanColumn extends React.Component {
 
 KanbanColumn.propTypes = {
   newCol: PropTypes.bool,
+  col: PropTypes.object,
 };
 
 export default withStyles(styles)(KanbanColumn);

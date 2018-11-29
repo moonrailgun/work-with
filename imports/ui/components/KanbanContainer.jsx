@@ -1,21 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 import KanbanColumn from './KanbanColumn';
 import { addKanbanColumn } from '/imports/api/kanban/methods';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-
-const getListStyle = isDraggingOver => ({
-  // outline: isDraggingOver ? 1 : 0,
-});
-
-const getItemStyle = (isDragging, draggableStyle) => ({
-  ...draggableStyle,
-});
 
 const styles = ({shape, spacing, palette, shadows}) => ({
   root: {
@@ -24,12 +15,7 @@ const styles = ({shape, spacing, palette, shadows}) => ({
     height: '100%',
     width: '100%',
   },
-  col: {
-    borderRadius: shape.borderRadius,
-    padding: spacing.unit,
-    backgroundColor: '#dfe3e6',
-    boxShadow: shadows[2],
-  },
+
   card: {
     borderRadius: shape.borderRadius,
     marginBottom: spacing.unit,
@@ -104,34 +90,6 @@ class KanbanContainer extends React.Component {
     })
   }
 
-  renderCards(cards) {
-    const {
-      classes,
-    } = this.props;
-
-    return cards.map((card, index) => (
-      <Draggable
-        key={card._id}
-        draggableId={card._id}
-        index={index}>
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            className={classes.card}
-            style={getItemStyle(
-                snapshot.isDragging,
-                provided.draggableProps.style
-            )}
-          >
-            {card.content}
-          </div>
-        )}
-      </Draggable>
-    ))
-  }
-
   render() {
     const {
       classes,
@@ -144,23 +102,7 @@ class KanbanContainer extends React.Component {
           <DragDropContext onDragEnd={(res) => this._handleDropEnd(res)}>
             {
               kanbanCols.map((col, index) => (
-                <KanbanColumn key={col._id}>
-                  <Droppable droppableId={col._id}>
-                    {
-                      (provided, snapshot) => (
-                        <div
-                          ref={provided.innerRef}
-                          className={classes.col}
-                          style={getListStyle(snapshot.isDraggingOver)}
-                        >
-                          <Typography gutterBottom>{col.title}</Typography>
-                          { this.renderCards(col.cards) }
-                          { provided.placeholder }
-                        </div>
-                      )
-                    }
-                  </Droppable>
-                </KanbanColumn>
+                <KanbanColumn key={col._id} col={col} />
               ))
             }
             <KanbanColumn newCol onAddNew={(title) => this._handleAddCol(title)} />
