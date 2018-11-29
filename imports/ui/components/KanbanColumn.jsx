@@ -11,7 +11,9 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import IconButton from '@material-ui/core/IconButton';
+import Tooltip from '@material-ui/core/Tooltip';
 import AddIcon from '@material-ui/icons/Add';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import ClearIcon from '@material-ui/icons/Clear';
 
 const getListStyle = isDraggingOver => ({
@@ -46,6 +48,10 @@ const styles = ({shape, spacing, shadows, palette}) => ({
     left: spacing.unit,
     right: spacing.unit,
     padding: spacing.unit * 2,
+    minWidth: 180,
+  },
+  colTitle: {
+    flex: 1
   },
 })
 
@@ -118,7 +124,7 @@ class KanbanColumn extends React.Component {
               value={this.state.newColumnTitle}
               onChange={e => this.setState({newColumnTitle: e.target.value})}
             />
-          <Button onClick={() => this._handleAddColumn()}>添加列表</Button>
+            <Button onClick={() => this._handleAddColumn()}>添加列表</Button>
             <IconButton onClick={() => this._handleCancelAdd(true)}>
               <ClearIcon />
             </IconButton>
@@ -156,7 +162,19 @@ class KanbanColumn extends React.Component {
                   className={classes.col}
                   style={getListStyle(snapshot.isDraggingOver)}
                 >
-                  <Typography gutterBottom>{col.title}</Typography>
+                  <Grid
+                    container
+                    wrap="nowrap"
+                    alignItems="center"
+                  >
+                    <Typography className={classes.colTitle} noWrap>{col.title}</Typography>
+                    <Tooltip title="添加" placement="top-start">
+                      <AddIcon fontSize="small" />
+                    </Tooltip>
+                    <Tooltip title="更多" placement="top-start">
+                      <MoreHorizIcon fontSize="small" />
+                    </Tooltip>
+                  </Grid>
                   { this.renderCards(col.cards) }
                   { provided.placeholder }
                 </div>
