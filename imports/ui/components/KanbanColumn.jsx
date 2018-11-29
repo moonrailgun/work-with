@@ -24,7 +24,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   ...draggableStyle,
 });
 
-const styles = ({shape, spacing, shadows, palette}) => ({
+const styles = ({shape, spacing, shadows, palette, typography}) => ({
   gridItem: {
     flexShrink: 0,
     position: 'relative',
@@ -53,11 +53,26 @@ const styles = ({shape, spacing, shadows, palette}) => ({
   colTitle: {
     flex: 1
   },
+  colActionBtn: {
+    color: palette.grey['A400'],
+    "&:hover": {
+      color: palette.primary['light'],
+      cursor: 'pointer'
+    }
+  },
+  cardAddField: {
+    padding: spacing.unit,
+    fontSize: typography.fontSize
+  },
+  cardAddBtn: {
+    width: '50%',
+  }
 })
 
 class KanbanColumn extends React.Component {
   state = {
     isAddNew: false,
+    isAddCard: false,
     newColumnTitle: '',
   }
 
@@ -78,6 +93,29 @@ class KanbanColumn extends React.Component {
 
     this.props.onAddNew(newColumnTitle);
     this.setState({isAddNew: false});
+  }
+
+  renderCardAdd() {
+    const {
+      classes,
+    } = this.props;
+
+    return this.state.isAddCard && (
+      <div>
+        <TextField
+          InputProps={{className: classes.cardAddField}}
+          defaultValue="新增内容..."
+          variant="outlined"
+          multiline
+          margin="normal"
+          rows="2"
+        />
+        <div>
+          <Button className={classes.cardAddBtn}>取消</Button>
+          <Button className={classes.cardAddBtn} color="primary">新增</Button>
+        </div>
+      </div>
+    );
   }
 
   renderCards(cards) {
@@ -168,13 +206,19 @@ class KanbanColumn extends React.Component {
                     alignItems="center"
                   >
                     <Typography className={classes.colTitle} noWrap>{col.title}</Typography>
-                    <Tooltip title="添加" placement="top-start">
+                    <Tooltip
+                      title="添加"
+                      placement="top-start"
+                      className={classes.colActionBtn}
+                      onClick={() => this.setState({isAddCard: true})}
+                    >
                       <AddIcon fontSize="small" />
                     </Tooltip>
-                    <Tooltip title="更多" placement="top-start">
+                    <Tooltip title="更多" placement="top-start" className={classes.colActionBtn}>
                       <MoreHorizIcon fontSize="small" />
                     </Tooltip>
                   </Grid>
+                  { this.renderCardAdd() }
                   { this.renderCards(col.cards) }
                   { provided.placeholder }
                 </div>
