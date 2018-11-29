@@ -169,7 +169,10 @@ class KanbanColumn extends React.Component {
       return (
         <Grid {...gridProps}>
           <div className={classes.colAdd}>
-            <Button style={{color: 'white'}} fullWidth onClick={() => this.setState({isAddNew: true})}><AddIcon />添加另一个列表</Button>
+            <Button style={{color: 'white'}} fullWidth onClick={() => this.setState({isAddNew: true})}>
+              <AddIcon />
+              <Typography noWrap color="inherit">添加另一个列表</Typography>
+            </Button>
           </div>
           {this.state.isAddNew && this.renderColAdd()}
         </Grid>
