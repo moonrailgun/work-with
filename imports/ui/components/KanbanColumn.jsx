@@ -74,9 +74,11 @@ class KanbanColumn extends React.Component {
     isAddNew: false,
     isAddCard: false,
     newColumnTitle: '',
+    newCardContent: '',
   }
+  _cardTextField = React.createRef();
 
-  _handleCancelAdd(clearText = false) {
+  _handleAddColumnCancel(clearText = false) {
     this.setState({isAddNew: false});
     if(clearText) {
       this.setState({newColumnTitle: ''});
@@ -95,6 +97,17 @@ class KanbanColumn extends React.Component {
     this.setState({isAddNew: false});
   }
 
+  _handleAddCard() {
+    let content = this.state.newCardContent;
+    console.log('新增内容:', content);
+    this._cardTextField && this._cardTextField.current.focus();
+    this.setState({newCardContent: ''});
+  }
+
+  _handleAddCardCancel() {
+    this.setState({newCardContent: '', isAddCard: false});
+  }
+
   renderCardAdd() {
     const {
       classes,
@@ -104,15 +117,28 @@ class KanbanColumn extends React.Component {
       <div>
         <TextField
           InputProps={{className: classes.cardAddField}}
-          defaultValue="新增内容..."
+          inputProps={{ref: this._cardTextField}}
+          placeholder="新增内容..."
           variant="outlined"
+          autoFocus
+          fullWidth
           multiline
           margin="normal"
           rows="2"
+          rowsMax="4"
+          value={this.state.newCardContent}
+          onChange={(e) => this.setState({newCardContent: e.target.value})}
         />
         <div>
-          <Button className={classes.cardAddBtn}>取消</Button>
-          <Button className={classes.cardAddBtn} color="primary">新增</Button>
+          <Button
+            className={classes.cardAddBtn}
+            onClick={() => this._handleAddCardCancel()}
+          >取消</Button>
+          <Button
+            className={classes.cardAddBtn}
+            color="primary"
+            onClick={() => this._handleAddCard()}
+          >新增</Button>
         </div>
       </div>
     );
@@ -152,7 +178,7 @@ class KanbanColumn extends React.Component {
     } = this.props;
 
     return (
-      <ClickAwayListener onClickAway={() => this._handleCancelAdd()}>
+      <ClickAwayListener onClickAway={() => this._handleAddColumnCancel()}>
         <Grow in={this.state.isAddNew}>
           <Paper className={classes.colAddGrow} elevation={4}>
             <TextField
@@ -163,7 +189,7 @@ class KanbanColumn extends React.Component {
               onChange={e => this.setState({newColumnTitle: e.target.value})}
             />
             <Button onClick={() => this._handleAddColumn()}>添加列表</Button>
-            <IconButton onClick={() => this._handleCancelAdd(true)}>
+            <IconButton onClick={() => this._handleAddColumnCancel(true)}>
               <ClearIcon />
             </IconButton>
           </Paper>
