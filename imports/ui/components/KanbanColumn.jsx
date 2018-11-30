@@ -7,11 +7,14 @@ import Grid from '@material-ui/core/Grid';
 import Grow from '@material-ui/core/Grow';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import Popper from '@material-ui/core/Popper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
+import MenuList from '@material-ui/core/MenuList';
+import MenuItem from '@material-ui/core/MenuItem';
 import AddIcon from '@material-ui/icons/Add';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -73,10 +76,12 @@ class KanbanColumn extends React.Component {
   state = {
     isAddNew: false,
     isAddCard: false,
+    isShowToggleMenu: false,
     newColumnTitle: '',
     newCardContent: '',
   }
-  _cardTextField = React.createRef();
+  _cardTextFieldRef = React.createRef();
+  _toggleMenuRef = null;
 
   _handleAddColumnCancel(clearText = false) {
     this.setState({isAddNew: false});
@@ -100,12 +105,41 @@ class KanbanColumn extends React.Component {
   _handleAddCard() {
     let content = this.state.newCardContent;
     console.log('新增内容:', content);
-    this._cardTextField && this._cardTextField.current.focus();
+    this._cardTextFieldRef && this._cardTextFieldRef.current.focus();
     this.setState({newCardContent: ''});
   }
 
   _handleAddCardCancel() {
     this.setState({newCardContent: '', isAddCard: false});
+  }
+
+  renderToggleMenu() {
+    return (
+      <Popper
+        open={this.state.isShowToggleMenu}
+        placement="bottom-end"
+        anchorEl={this._toggleMenuRef}
+        transition
+        disablePortal
+      >
+        {({ TransitionProps, placement }) => (
+          <Grow
+            {...TransitionProps}
+            style={{ transformOrigin: placement === 'bottom-end' ? 'right top' : 'right bottom' }}
+          >
+            <Paper>
+              <ClickAwayListener onClickAway={() => this.setState({isShowToggleMenu: false})}>
+                <MenuList>
+                  <MenuItem onClick={() => console.log('aaaaa')}>Profile</MenuItem>
+                  <MenuItem onClick={() => console.log('aaaaa')}>My account</MenuItem>
+                  <MenuItem onClick={() => console.log('aaaaa')}>Logout</MenuItem>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    )
   }
 
   renderCardAdd() {
@@ -117,7 +151,7 @@ class KanbanColumn extends React.Component {
       <div>
         <TextField
           InputProps={{className: classes.cardAddField}}
-          inputProps={{ref: this._cardTextField}}
+          inputProps={{ref: this._cardTextFieldRef}}
           placeholder="新增内容..."
           variant="outlined"
           autoFocus
@@ -236,13 +270,22 @@ class KanbanColumn extends React.Component {
                       title="添加"
                       placement="top-start"
                       className={classes.colActionBtn}
-                      onClick={() => this.setState({isAddCard: true})}
+                      onClick={() => this.setState({isAddCard: !this.state.isAddCard})}
                     >
                       <AddIcon fontSize="small" />
                     </Tooltip>
-                    <Tooltip title="更多" placement="top-start" className={classes.colActionBtn}>
+                    <Tooltip
+                      title="更多"
+                      placement="top-start"
+                      className={classes.colActionBtn}
+                      onClick={(e) => {
+                        this._toggleMenuRef = e.currentTarget;
+                        this.setState({isShowToggleMenu: !this.state.isShowToggleMenu})
+                      }}
+                    >
                       <MoreHorizIcon fontSize="small" />
                     </Tooltip>
+                    { this.renderToggleMenu() }
                   </Grid>
                   { this.renderCardAdd() }
                   { this.renderCards(col.cards) }
