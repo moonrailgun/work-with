@@ -11,12 +11,16 @@ import Hello from './Hello.jsx';
 import Info from './Info.jsx';
 import LanguageToggle from './components/LanguageToggle.jsx';
 import NavBar from './components/NavBar.jsx';
+import { ThemeProvider } from 'styled-components';
 
+import { createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 // i18n.setLocale('zh-CN');
 //
 // console.log(i18n.getLocale())
+
+const theme = createMuiTheme({});
 
 class App extends React.Component {
   constructor(props) {
@@ -51,18 +55,20 @@ class App extends React.Component {
       <div>
         <CssBaseline />
         <LanguageToggle />
-        <BrowserRouter>
-          <div id="basic-route">
-            <Route component={NavBar}></Route>
-            <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Register} />
-              <Route path="/dashboard" component={Dashboard} />
-              <Route path="/kanban/:kanbanId?" component={Kanban} />
-              <Route component={NotFound} />
-            </Switch>
-          </div>
-        </BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter>
+            <div id="basic-route">
+              <Route component={NavBar}></Route>
+              <Switch>
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
+                <Route path="/dashboard" component={Dashboard} />
+                <Route path="/kanban/:kanbanId?" component={Kanban} />
+                <Route component={NotFound} />
+              </Switch>
+            </div>
+          </BrowserRouter>
+        </ThemeProvider>
       </div>
     )
   }
