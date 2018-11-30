@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { insert as insertCard } from '/imports/api/card/methods';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -103,8 +104,15 @@ class KanbanColumn extends React.Component {
   }
 
   _handleAddCard() {
+    const {
+      _id: cardColId,
+    } = this.props.col;
     let content = this.state.newCardContent;
-    console.log('新增内容:', content);
+    console.log('新增内容:', cardColId, content);
+    insertCard.call({
+      content,
+      cardColId,
+    }, (err) => console.log('[insertCard error]', err));
     this._cardTextFieldRef && this._cardTextFieldRef.current.focus();
     this.setState({newCardContent: ''});
   }

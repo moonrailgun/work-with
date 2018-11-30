@@ -20,7 +20,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 //
 // console.log(i18n.getLocale())
 
-const theme = createMuiTheme({});
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
+});
 
 class App extends React.Component {
   constructor(props) {

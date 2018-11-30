@@ -61,8 +61,6 @@ export const addKanbanColumn = new ValidatedMethod({
     }
   }).validator(),
   run({title, kanbanId}) {
-    console.log(title, kanbanId);
-
     const newColId = KanbanColumn.insert({
       title,
       kanbanId,

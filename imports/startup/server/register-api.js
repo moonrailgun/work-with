@@ -1,3 +1,4 @@
-import '../../api/languages/methods.js';
-import '../../api/kanban/methods.js';
-import '../../api/kanban/server/publications.js';
+import '/imports/api/languages/methods.js';
+import '/imports/api/kanban/methods.js';
+import '/imports/api/kanban/server/publications.js';
+import '/imports/api/card/methods.js';

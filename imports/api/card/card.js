@@ -5,7 +5,7 @@ class CardCollection extends Mongo.Collection {
 
 }
 
-export const Card = new CardCollection('Card');
+export const Card = new CardCollection('cards');
 
 Card.deny({
   insert() { return true; },
@@ -16,12 +16,16 @@ Card.deny({
 Card.schema = new SimpleSchema({
   creator: {
     type: String,
-    regEx: SimpleSchema.RegEx.id,
+    regEx: SimpleSchema.RegEx.Id,
   },
   assignTo: {
     type: String,
-    regEx: SimpleSchema.RegEx.id,
+    regEx: SimpleSchema.RegEx.Id,
     optional: true,
+  },
+  cardColId: {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id,
   },
   content: {
     type: String,
@@ -33,8 +37,9 @@ Card.schema = new SimpleSchema({
   },
   createdAt: {
     type: Date,
+    // autoValue: () => new Date(),
   },
-})
+});
 
 Card.attachSchema(Card.schema);
 Card.helpers({
