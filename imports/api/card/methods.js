@@ -31,6 +31,27 @@ export const insert = new ValidatedMethod({
   },
 })
 
+export const assign = new ValidatedMethod({
+  name: 'card.assign',
+  validate: new SimpleSchema({
+    cardId:{
+      type: String,
+      regEx: SimpleSchema.RegEx.Id,
+    },
+    assignTo:{
+      type: String,
+      regEx: SimpleSchema.RegEx.Id,
+    }
+  }).validator(),
+  run({cardId, assignTo}) {
+    return Card.update(cardId, {
+      $set: {
+        assignTo,
+      }
+    })
+  }
+})
+
 const ALLOW_METHODS = _.map([
   insert,
 ], 'name');
