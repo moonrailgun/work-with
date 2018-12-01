@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { insert as insertCard } from '/imports/api/card/methods';
+import styled from 'styled-components';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -70,8 +71,21 @@ const styles = ({shape, spacing, shadows, palette, typography}) => ({
   },
   cardAddBtn: {
     width: '50%',
-  }
+  },
 })
+
+const CardItem = styled.div`
+  border-radius: ${props => props.theme.shape.borderRadius}px;
+  margin-bottom: ${props => props.theme.spacing.unit}px;
+  padding: ${props => props.theme.spacing.unit * 2}px;
+  user-select: none;
+  background-color: ${props => props.theme.palette.common.white};
+  box-shadow: 'none';
+
+  &:hover, &:active {
+    box-shadow: ${props => props.theme.shadows[1]};
+  }
+`
 
 class KanbanColumn extends React.Component {
   state = {
@@ -112,7 +126,7 @@ class KanbanColumn extends React.Component {
     insertCard.call({
       content,
       cardColId,
-    }, (err) => console.log('[insertCard error]', err));
+    }, (err) => err && console.log('[insertCard error]', err));
     this._cardTextFieldRef && this._cardTextFieldRef.current.focus();
     this.setState({newCardContent: ''});
   }
@@ -197,18 +211,17 @@ class KanbanColumn extends React.Component {
         draggableId={card._id}
         index={index}>
         {(provided, snapshot) => (
-          <div
+          <CardItem
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
-            className={classes.card}
             style={getItemStyle(
                 snapshot.isDragging,
                 provided.draggableProps.style
             )}
           >
             {card.content}
-          </div>
+          </CardItem>
         )}
       </Draggable>
     ))
@@ -246,6 +259,7 @@ class KanbanColumn extends React.Component {
       children,
       classes,
       col,
+      cards,
     } = this.props;
 
     const gridProps = {
@@ -296,7 +310,7 @@ class KanbanColumn extends React.Component {
                     { this.renderToggleMenu() }
                   </Grid>
                   { this.renderCardAdd() }
-                  { this.renderCards(col.cards) }
+                  { this.renderCards(cards) }
                   { provided.placeholder }
                 </div>
               )
@@ -323,6 +337,7 @@ class KanbanColumn extends React.Component {
 KanbanColumn.propTypes = {
   newCol: PropTypes.bool,
   col: PropTypes.object,
+  cards: PropTypes.array,
 };
 
 export default withStyles(styles)(KanbanColumn);

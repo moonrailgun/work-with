@@ -25,6 +25,7 @@ class KanbanRoute extends React.Component {
       classes,
       kanbanInfo,
       kanbanCols,
+      kanbanCards,
     } = this.props;
     const { kanbanId } = match.params;
 
@@ -32,7 +33,7 @@ class KanbanRoute extends React.Component {
       <div className={classes.root}>
         <div><h3>{kanbanInfo.title}</h3></div>
         <div className={classes.kanbanContainer}>
-          <KanbanContainer kanbanId={kanbanId} kanbanCols={kanbanCols} />
+          <KanbanContainer kanbanId={kanbanId} kanbanCols={kanbanCols} kanbanCards={kanbanCards} />
         </div>
       </div>
     )

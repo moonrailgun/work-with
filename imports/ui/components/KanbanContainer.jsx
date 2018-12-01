@@ -15,18 +15,6 @@ const styles = ({shape, spacing, palette, shadows}) => ({
     height: '100%',
     width: '100%',
   },
-
-  card: {
-    borderRadius: shape.borderRadius,
-    marginBottom: spacing.unit,
-    padding: spacing.unit * 2,
-    userSelect: 'none',
-    backgroundColor: palette.common.white,
-    boxShadow: 'none',
-    '&:hover, &:active': {
-      boxShadow: shadows[1],
-    }
-  }
 })
 
 class KanbanContainer extends React.Component {
@@ -94,6 +82,7 @@ class KanbanContainer extends React.Component {
     const {
       classes,
       kanbanCols,
+      kanbanCards,
     } = this.props;
 
     return (
@@ -102,7 +91,7 @@ class KanbanContainer extends React.Component {
           <DragDropContext onDragEnd={(res) => this._handleDropEnd(res)}>
             {
               kanbanCols.map((col, index) => (
-                <KanbanColumn key={col._id} col={col} />
+                <KanbanColumn key={col._id} col={col} cards={kanbanCards.filter(c => c.cardColId === col._id)} />
               ))
             }
             <KanbanColumn newCol onAddNew={(title) => this._handleAddCol(title)} />
@@ -115,6 +104,8 @@ class KanbanContainer extends React.Component {
 
 KanbanContainer.propTypes = {
   kanbanId: PropTypes.string.isRequired,
+  kanbanCols: PropTypes.array,
+  kanbanCards: PropTypes.array
 };
 
 export default withStyles(styles)(KanbanContainer);
