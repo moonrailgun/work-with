@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { insert as insertCard } from '/imports/api/card/methods';
 import styled from 'styled-components';
+import CardItem from './CardItem';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -73,19 +74,6 @@ const styles = ({shape, spacing, shadows, palette, typography}) => ({
     width: '50%',
   },
 })
-
-const CardItem = styled.div`
-  border-radius: ${props => props.theme.shape.borderRadius}px;
-  margin-bottom: ${props => props.theme.spacing.unit}px;
-  padding: ${props => props.theme.spacing.unit * 2}px;
-  user-select: none;
-  background-color: ${props => props.theme.palette.common.white};
-  box-shadow: 'none';
-
-  &:hover, &:active {
-    box-shadow: ${props => props.theme.shadows[1]};
-  }
-`
 
 class KanbanColumn extends React.Component {
   state = {
@@ -211,17 +199,19 @@ class KanbanColumn extends React.Component {
         draggableId={card._id}
         index={index}>
         {(provided, snapshot) => (
-          <CardItem
+          <div
             ref={provided.innerRef}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             style={getItemStyle(
-                snapshot.isDragging,
-                provided.draggableProps.style
+              snapshot.isDragging,
+              provided.draggableProps.style
             )}
           >
-            {card.content}
-          </CardItem>
+            <CardItem>
+              {card.content}
+            </CardItem>
+          </div>
         )}
       </Draggable>
     ))
