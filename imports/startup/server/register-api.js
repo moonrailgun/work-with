@@ -1,3 +1,4 @@
+import '/imports/api/users/server/publications.js';
 import '/imports/api/languages/methods.js';
 import '/imports/api/kanban/methods.js';
 import '/imports/api/kanban/server/publications.js';

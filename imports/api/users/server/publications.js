@@ -1,9 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { Card } from '../card.js';
 import { Kanban } from '../../kanban/kanban.js';
 
-Meteor.publishComposite('card.all', function({kanbanId}) {
+Meteor.publishComposite('user.kanban.all', function({kanbanId}) {
   const { userId } = this;
 
   if(!userId) {
@@ -26,16 +25,14 @@ Meteor.publishComposite('card.all', function({kanbanId}) {
     },
     children: [{
       find(kanbanInfo) {
-        let cols = kanbanInfo.cols;
-        if(!cols) return this.ready();
+        let members = kanbanInfo.members;
+        if(!members) return this.ready();
 
         const query = {
-          cardColId: {
-            $in: cols
-          }
+          _id: { $in: members }
         };
 
-        return Card.find(query);
+        return Meteor.users.find(query);
       }
     }]
   }
