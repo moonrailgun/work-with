@@ -94,6 +94,7 @@ const styles = theme => ({
   },
   drawer: {
     maxWidth: 280,
+    width: 280,
   }
 })
 
@@ -155,11 +156,11 @@ class NavBar extends React.Component {
 
     return (
       <Drawer
-        className={classes.drawer}
         open={this.state.openDrawer}
         onClose={() => this.setState({openDrawer: false})}
       >
         <div
+          className={classes.drawer}
           tabIndex={0}
           role="button"
           onClick={() => this.setState({openDrawer: false})}
