@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import i18n from 'meteor/universe:i18n';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -58,8 +57,7 @@ class Login extends React.Component {
     Meteor.loginWithPassword(email, password, (err) => {
       if(err) {
         this.setState({
-          // errorMsg: i18n.__(`server.${err.reason}`),
-          errorMsg: i18n.__(`${err.reason}`),
+          errorMsg: err.reason,
         });
       }else {
         console.log('登录成功')

@@ -1,5 +1,4 @@
 import React from 'react';
-import i18n from 'meteor/universe:i18n';
 import getLanguages from '../../api/languages/methods';
 
 class LanguageToggle extends React.Component {

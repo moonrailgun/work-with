@@ -29,7 +29,7 @@ meteorhacks:aggregate
 ostrio:files
 
 # i18n
-universe:i18n
+tap:i18n
 
 # accounts
 accounts-password
