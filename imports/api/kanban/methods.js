@@ -6,6 +6,7 @@ import { _ } from 'meteor/erasaur:meteor-lodash';
 
 import { Kanban } from './kanban';
 import { KanbanColumn } from './kanbanColumn';
+import { Card } from '../card/card';
 
 export const insert = new ValidatedMethod({
   name: 'kanban.insert',
@@ -68,6 +69,69 @@ export const addKanbanColumn = new ValidatedMethod({
 
     return Kanban.update(kanbanId, {
       $push: {cols: newColId},
+    })
+  }
+})
+
+export const moveCard = new ValidatedMethod({
+  name: 'kanban.moveCard',
+  validate: new SimpleSchema({
+    cardId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id,
+    },
+    fromColId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id,
+    },
+    toColId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id,
+    },
+    fromIndex: {
+      type: Number,
+    },
+    toIndex: {
+      type: Number,
+    },
+  }).validator(),
+  run({cardId, fromColId, toColId, fromIndex, toIndex}) {
+    const cardInfo = Card.findOne(cardId);
+    if(!cardInfo) {
+      // 没有找到卡片
+      throw new Meteor.Error(
+        'api.kanban.moveCard.cardNotFound',
+        'Card not found',
+      );
+    }
+
+    if(cardInfo.cardColId !== fromColId) {
+      // 卡片已经被移动
+      throw new Meteor.Error(
+        'api.kanban.moveCard.cardHasBeenMoved',
+        'Card has been moved',
+      );
+    }
+
+    Card.update(cardId, {
+      $set: {
+        cardColId: toColId,
+      }
+    })
+
+    KanbanColumn.update(fromColId, {
+      $pull: {
+        cards: cardId,
+      }
+    })
+
+    KanbanColumn.update(toColId, {
+      $push: {
+        cards: {
+          $each: [ cardId ],
+          $position: toIndex,
+        }
+      }
     })
   }
 })

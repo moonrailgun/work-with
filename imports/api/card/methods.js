@@ -54,6 +54,7 @@ export const assign = new ValidatedMethod({
 
 const ALLOW_METHODS = _.map([
   insert,
+  assign,
 ], 'name');
 
 if(Meteor.isServer) {
