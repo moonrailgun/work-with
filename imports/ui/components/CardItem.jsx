@@ -20,6 +20,8 @@ const Root = styled.div`
   .main {
     flex: 1;
     padding: ${props => props.theme.spacing.unit}px 0;
+    width: 0;
+    overflow-wrap: break-word;
   }
 
   .type, .action {
