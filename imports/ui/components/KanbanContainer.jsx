@@ -91,7 +91,7 @@ class KanbanContainer extends React.Component {
           <DragDropContext onDragEnd={(res) => this._handleDropEnd(res)}>
             {
               kanbanCols.map((col, index) => (
-                <KanbanColumn key={col._id} col={col} cards={kanbanCards.filter(c => c.cardColId === col._id)} />
+                <KanbanColumn key={col._id} col={col} cards={col.cards.map(cardId => kanbanCards.find(c => c._id === cardId))} />
               ))
             }
             <KanbanColumn newCol onAddNew={(title) => this._handleAddCol(title)} />

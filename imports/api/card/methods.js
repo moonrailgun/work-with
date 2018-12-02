@@ -4,6 +4,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 import { _ } from 'meteor/erasaur:meteor-lodash';
 
+import { KanbanColumn } from '../kanban/kanbanColumn';
 import { Card } from './card';
 
 export const insert = new ValidatedMethod({
@@ -26,6 +27,15 @@ export const insert = new ValidatedMethod({
       content,
       createdAt: new Date(),
     });
+
+    KanbanColumn.update(cardColId, {
+      $push: {
+        cards: {
+          $each: [cardId],
+          $position: 0,
+        }
+      }
+    })
 
     return cardId;
   },

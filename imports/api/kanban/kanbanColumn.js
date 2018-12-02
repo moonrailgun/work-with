@@ -22,8 +22,9 @@ KanbanColumn.schema = new SimpleSchema({
     type: String
   },
   cards: {
-    type: [Card],
+    type: [String],
     defaultValue: [],
+    regEx: SimpleSchema.RegEx.Id,
   },
   kanbanId: {
     type: String,
