@@ -33,6 +33,9 @@ const Root = styled.div`
       color: ${props => props.theme.palette.grey[700]};
     }
     margin: ${props => props.theme.spacing.unit}px;
+  }
+
+  .action {
     cursor: pointer;
   }
 `
