@@ -6,7 +6,6 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
 const Root = styled.div`
   border-radius: ${props => props.theme.shape.borderRadius}px;
-  margin-bottom: ${props => props.theme.spacing.unit}px;
   padding: ${props => props.theme.spacing.unit}px;
   user-select: none;
   background-color: ${props => props.theme.palette.common.white};
@@ -39,12 +38,16 @@ const Root = styled.div`
 `
 
 class CardItem extends React.Component {
+  _handleClickMore() {
+    console.log('TODO: 待实现');
+  }
+
   render() {
     return (
       <Root>
         <div className="type"><NotesIcon /></div>
         <div className="main">{this.props.children}</div>
-        <div className="action"><MoreHorizIcon /></div>
+        <div className="action" onClick={() => this._handleClickMore()}><MoreHorizIcon /></div>
       </Root>
     )
   }

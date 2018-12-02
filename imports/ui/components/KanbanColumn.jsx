@@ -73,6 +73,10 @@ const styles = ({shape, spacing, shadows, palette, typography}) => ({
   cardAddBtn: {
     width: '50%',
   },
+  draggableCard: {
+    marginTop: spacing.unit,
+    marginBottom: spacing.unit,
+  }
 })
 
 class KanbanColumn extends React.Component {
@@ -201,6 +205,7 @@ class KanbanColumn extends React.Component {
         {(provided, snapshot) => (
           <div
             ref={provided.innerRef}
+            className={classes.draggableCard}
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             style={getItemStyle(
