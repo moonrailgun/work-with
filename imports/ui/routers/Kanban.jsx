@@ -49,12 +49,16 @@ const route = withTracker(({match}) => {
   let kanbanCols = [];
   let kanbanCards = [];
   if(kanbanInfo && kanbanInfo.cols) {
-    // 这里有个排序
+    let cols = kanbanInfo.cols || [];
     kanbanCols = KanbanColumn.find({
-      $or: kanbanInfo.cols.map(_id => ({_id}))
+      _id: {
+        $in: cols
+      }
     }).fetch();
     kanbanCards = Card.find({
-      $or: kanbanInfo.cols.map(id => ({cardColId: id}))
+      cardColId: {
+        $in: cols
+      }
     }).fetch();
   }
   return {
