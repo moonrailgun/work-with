@@ -19,6 +19,7 @@
     "react-beautiful-dnd": "^9.0.2",
     "react-dom": "^16.5.0",
     "react-drag-drawer": "^3.3.0",
+    "react-markdown": "^4.0.4",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "simpl-schema": "^1.5.3",
