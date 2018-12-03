@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Markdown from './Markdown';
 
 import NotesIcon from '@material-ui/icons/Notes';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -18,7 +19,7 @@ const Root = styled.div`
 
   .main {
     flex: 1;
-    padding: ${props => props.theme.spacing.unit}px 0;
+    padding: ${props => props.theme.spacing.unit}px 0 0;
     width: 0;
     overflow-wrap: break-word;
   }
@@ -49,7 +50,9 @@ class CardItem extends React.Component {
     return (
       <Root>
         <div className="type"><NotesIcon /></div>
-        <div className="main">{this.props.children}</div>
+        <div className="main">
+          <Markdown>{this.props.children}</Markdown>
+        </div>
         <div className="action" onClick={() => this._handleClickMore()}><MoreHorizIcon /></div>
       </Root>
     )
