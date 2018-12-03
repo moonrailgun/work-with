@@ -42,9 +42,11 @@ class KanbanContainer extends React.Component {
     };
 
     console.log('move card', pkg);
-    moveCard.call(pkg, err => console.log(err));
-
-    return true;
+    moveCard.call(pkg, err => {
+      if(err) {
+        console.log(err);
+      }
+    });
   }
 
   _handleAddCol(title) {
