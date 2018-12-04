@@ -13,7 +13,7 @@ const Container = styled.div`
   nav {
     width: 2.5rem;
     position: relative;
-    padding: 4rem 0;
+    padding: 2rem 0;
 
     &::after {
       content: ' ';
