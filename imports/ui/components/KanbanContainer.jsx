@@ -12,7 +12,7 @@ const styles = ({shape, spacing, palette, shadows}) => ({
   root: {
     padding: spacing.unit,
     overflow: 'auto',
-    height: '100%',
+    flex: 1,
     width: '100%',
   },
 })

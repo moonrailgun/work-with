@@ -4,18 +4,16 @@ import { Kanban } from '/imports/api/kanban/kanban';
 import { KanbanColumn } from '/imports/api/kanban/kanbanColumn';
 import { Card } from '/imports/api/card/card';
 import KanbanContainer from '/imports/ui/components/KanbanContainer';
+import CardDetailContainer from '/imports/ui/components/CardDetailContainer';
 
 import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    flex: 1,
+  container: {
+    overflow: 'auto',
+    height: '100%',
   },
-  kanbanContainer: {
-    flex: 1,
-  }
 })
 
 class KanbanRoute extends React.Component {
@@ -30,12 +28,24 @@ class KanbanRoute extends React.Component {
     const { kanbanId } = match.params;
 
     return (
-      <div className={classes.root}>
-        <div><h3>{kanbanInfo.title}</h3></div>
-        <div className={classes.kanbanContainer}>
+      <Grid container className={classes.container}>
+        <Grid
+          container
+          direction="column"
+          item
+          xs={12}
+          sm={9}
+        >
+          <div><h3>{kanbanInfo.title}</h3></div>
           <KanbanContainer kanbanId={kanbanId} kanbanCols={kanbanCols} kanbanCards={kanbanCards} />
-        </div>
-      </div>
+        </Grid>
+        <Grid
+          item
+          sm={3}
+        >
+          <CardDetailContainer />
+        </Grid>
+      </Grid>
     )
   }
 }
