@@ -261,7 +261,7 @@ class KanbanColumn extends React.Component {
       item: true,
       xs: 12,
       sm: 3,
-      md: 2,
+      lg: 2,
       className: classes.gridItem,
     }
 
