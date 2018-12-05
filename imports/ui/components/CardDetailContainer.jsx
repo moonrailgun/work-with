@@ -11,8 +11,20 @@ const Container = styled.div`
   background-color: #efefef;
 
   nav {
+    position: relative;
     width: 2.5rem;
     padding: 1rem 0;
+
+    &::before {
+      content: ' ';
+      width: 1px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      background-color: #ccc;
+      transform: scaleX(0.5);
+    }
 
     button {
       display: block;
@@ -46,6 +58,7 @@ const Container = styled.div`
       bottom: 0;
       left: 0;
       background-color: #ccc;
+      transform: scaleX(0.5);
     }
   }
 `
