@@ -11,7 +11,7 @@ import Grid from '@material-ui/core/Grid';
 
 const styles = theme => ({
   container: {
-    overflow: 'auto',
+    overflow: 'hidden',
     height: '100%',
   },
 })
