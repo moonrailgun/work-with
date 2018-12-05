@@ -33,15 +33,13 @@ class KanbanRoute extends React.Component {
           container
           direction="column"
           item
-          xs={12}
-          sm={9}
+          xs
         >
           <div><h3>{kanbanInfo.title}</h3></div>
           <KanbanContainer kanbanId={kanbanId} kanbanCols={kanbanCols} kanbanCards={kanbanCards} />
         </Grid>
         <Grid
           item
-          sm={3}
         >
           <CardDetailContainer />
         </Grid>

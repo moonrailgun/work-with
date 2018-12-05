@@ -8,22 +8,11 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 const Container = styled.div`
   display: flex;
   height: 100%;
-  background-color: white;
+  background-color: #efefef;
 
   nav {
     width: 2.5rem;
-    position: relative;
-    padding: 2rem 0;
-
-    &::after {
-      content: ' ';
-      width: 1px;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      right: 0;
-      background-color: #ccc;
-    }
+    padding: 1rem 0;
 
     button {
       display: block;
@@ -34,10 +23,29 @@ const Container = styled.div`
       border-radius: 3px;
       border: 0;
       cursor: pointer;
+      background: transparent;
+      outline: 0;
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.2);
       }
+    }
+  }
+
+  main {
+    position: relative;
+    overflow: hidden;
+    transition: width 0.4s ease-in-out;
+    width: ${props => props.collapse ? 0 : '280px'};
+
+    &::before {
+      content: ' ';
+      width: 1px;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      background-color: #ccc;
     }
   }
 `
@@ -49,13 +57,21 @@ class CardDetailContainer extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container collapse={this.state.isShow}>
         <nav>
           <button onClick={() => this.setState({isShow: !this.state.isShow})}>
-            <LastPageIcon />
+            {
+              this.state.isShow ? (
+                <FirstPageIcon />
+              ) : (
+                <LastPageIcon />
+              )
+            }
           </button>
         </nav>
-        card detail....
+        <main>
+          card detail....
+        </main>
       </Container>
     )
   }
