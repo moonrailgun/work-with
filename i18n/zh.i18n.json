@@ -1,5 +1,9 @@
 {
   "kanban": {
     "name": "看板"
+  },
+  "common": {
+    "delete": "删除",
+    "move": "移动"
   }
 }

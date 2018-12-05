@@ -1,5 +1,9 @@
 {
   "kanban": {
     "name": "Kanban"
+  },
+  "common": {
+    "delete": "Delete",
+    "move": "Move"
   }
 }

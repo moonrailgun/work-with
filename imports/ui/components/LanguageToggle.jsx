@@ -1,5 +1,8 @@
 import React from 'react';
+import { TAPi18n } from 'meteor/tap:i18n';
 import getLanguages from '../../api/languages/methods';
+
+window.__ = TAPi18n.__; // 全局翻译方法
 
 class LanguageToggle extends React.Component {
   constructor(props) {
@@ -10,6 +13,7 @@ class LanguageToggle extends React.Component {
   }
 
   componentDidMount() {
+    TAPi18n.setLanguage('zh');
     getLanguages.call((error, languages) => {
       if (!error) {
         this.setState({

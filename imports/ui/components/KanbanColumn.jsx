@@ -213,7 +213,7 @@ class KanbanColumn extends React.Component {
               provided.draggableProps.style
             )}
           >
-            <CardItem>
+            <CardItem cardId={card._id}>
               {card.content}
             </CardItem>
           </div>

@@ -11,7 +11,9 @@ const getLanguages = new ValidatedMethod({
   name: 'languages.getAll',
   validate: null,
   run() {
-    return TAPi18n.getLanguages();
+    const languages = TAPi18n.getLanguages();
+    console.log('languages', languages);
+    return languages;
   },
 });
 

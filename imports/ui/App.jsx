@@ -16,10 +16,6 @@ import { ThemeProvider } from 'styled-components';
 import { createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-// i18n.setLocale('zh-CN');
-//
-// console.log(i18n.getLocale())
-
 const theme = createMuiTheme({
   typography: {
     useNextVariants: true,

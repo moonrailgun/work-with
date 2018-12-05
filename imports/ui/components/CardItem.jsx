@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Markdown from './Markdown';
 
@@ -64,6 +65,11 @@ class CardItem extends React.Component {
     this.setState({isShowToggleMenu: true})
   }
 
+  _handleDelete() {
+    this.setState({isShowToggleMenu: false});
+    console.log('TODO: delete card:', this.props.cardId);
+  }
+
   renderToggleMenu() {
     return (
       <Popper
@@ -81,9 +87,8 @@ class CardItem extends React.Component {
             <Paper>
               <ClickAwayListener onClickAway={() => this.setState({isShowToggleMenu: false})}>
                 <MenuList>
-                  <MenuItem onClick={() => console.log('aaaaa')}>Profile</MenuItem>
-                  <MenuItem onClick={() => console.log('aaaaa')}>My account</MenuItem>
-                  <MenuItem onClick={() => console.log('aaaaa')}>Logout</MenuItem>
+                  <MenuItem onClick={() => console.log('TODO:move')}>{__('common.move')}</MenuItem>
+                  <MenuItem onClick={() => this._handleDelete()}>{__('common.delete')}</MenuItem>
                 </MenuList>
               </ClickAwayListener>
             </Paper>
@@ -107,6 +112,10 @@ class CardItem extends React.Component {
       </Root>
     )
   }
+}
+
+CardItem.propTypes = {
+  cardId: PropTypes.string,
 }
 
 export default CardItem;
