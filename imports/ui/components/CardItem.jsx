@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Markdown from './Markdown';
+import { remove } from '/imports/api/card/methods';
 
 import Popper from '@material-ui/core/Popper';
 import Grow from '@material-ui/core/Grow';
@@ -67,7 +68,10 @@ class CardItem extends React.Component {
 
   _handleDelete() {
     this.setState({isShowToggleMenu: false});
-    console.log('TODO: delete card:', this.props.cardId);
+    console.log('delete card:', this.props.cardId);
+    remove.call({
+      cardId: this.props.cardId
+    }, (err) => err && console.log('delete card error:', err))
   }
 
   renderToggleMenu() {
