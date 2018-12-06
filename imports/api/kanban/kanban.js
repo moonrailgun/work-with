@@ -64,7 +64,7 @@ Kanban.schema = new SimpleSchema({
   },
   createdAt: {
     type: Date,
-    // denyUpdate: true,
+    autoValue: () => new Date(),
   },
 });
 

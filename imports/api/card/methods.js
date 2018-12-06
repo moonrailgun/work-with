@@ -26,7 +26,6 @@ export const insert = new ValidatedMethod({
       creator: userId,
       cardColId,
       content,
-      createdAt: new Date(),
     });
 
     KanbanColumn.update(cardColId, {

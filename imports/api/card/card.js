@@ -37,7 +37,7 @@ Card.schema = new SimpleSchema({
   },
   createdAt: {
     type: Date,
-    // autoValue: () => new Date(),
+    autoValue: () => new Date(),
   },
 });
 

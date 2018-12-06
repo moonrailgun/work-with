@@ -31,7 +31,6 @@ export const insert = new ValidatedMethod({
       userId,
       members: [userId],
       visibility,
-      createdAt: new Date(),
     });
 
     let defaultCols = [];

@@ -30,6 +30,10 @@ KanbanColumn.schema = new SimpleSchema({
     type: String,
     regEx: SimpleSchema.RegEx.Id,
   },
+  createdAt: {
+    type: Date,
+    autoValue: () => new Date(),
+  },
 });
 
 KanbanColumn.attachSchema(KanbanColumn.schema);
