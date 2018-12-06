@@ -197,7 +197,7 @@ class KanbanColumn extends React.Component {
       classes,
     } = this.props;
 
-    return cards.map((card, index) => (
+    return cards.filter(Boolean).map((card, index) => (
       <Draggable
         key={card._id}
         draggableId={card._id}
