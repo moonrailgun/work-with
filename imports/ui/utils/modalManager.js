@@ -1,16 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import styled from 'styled-components';
+import theme from './theme';
 
 import Modal from '@material-ui/core/Modal';
 
+const ModalBody = styled.div`
+  position: absolute;
+  background-color: ${theme.palette.background.paper};
+  box-shadow: ${theme.shadows[5]};
+  border-radius: ${theme.shape.borderRadius}px;
+  padding: ${theme.spacing.unit * 4}px;
+  padding-top: ${theme.spacing.unit * 3}px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  outline: 0;
+`
+
 const modalManager = {
   _list: [],
-  open: function(body) {
+  open: function(body, props) {
     const div = document.createElement('div');
     document.body.appendChild(div);
-    const el = React.createElement(Modal, {
+    const modalBody = React.createElement(ModalBody, {}, body);
+    const el = React.createElement(Modal, Object.assign({}, props, {
       open: true, onClose: () => this.closeTop()
-    }, body);
+    }), modalBody);
     ReactDOM.render(el, div);
 
     this._list.push(div);
