@@ -79,10 +79,10 @@ class Login extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     if(nextProps.user) {
-      console.log('this.props.history', this.props.history.location);
       this.props.history.push('/');
-      console.log('this.props.history', this.props.history.location);
     }
+
+    return true;
   }
 
   render() {
