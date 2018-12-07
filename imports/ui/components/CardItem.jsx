@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Markdown from './Markdown';
 import { remove } from '/imports/api/card/methods';
+import { modalManager } from '/imports/ui/utils/index';
 
 import Popper from '@material-ui/core/Popper';
 import Grow from '@material-ui/core/Grow';
@@ -58,22 +59,6 @@ const Root = styled.div`
   }
 `
 
-const EditModal = styled(Modal)`
-  main {
-    position: absolute;
-    width: ${props => props.theme.spacing.unit * 70}px;
-    background-color: ${props => props.theme.palette.background.paper};
-    box-shadow: ${props => props.theme.shadows[5]};
-    border-radius: ${props => props.theme.shape.borderRadius}px;
-    padding: ${props => props.theme.spacing.unit * 4}px;
-    padding-top: ${props => props.theme.spacing.unit * 3}px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    outline: 0;
-  }
-`
-
 class CardItem extends React.Component {
   state = {
     isShowToggleMenu: false,
@@ -90,9 +75,29 @@ class CardItem extends React.Component {
   _handleEdit() {
     this.setState({
       isShowToggleMenu: false,
-      isShowEditModel: true,
       editContent: this.props.cardContent
     });
+
+    // TODO: 需要处理一下value获取不到的问题
+    modalManager.open(
+      <div>
+        <TextField
+          placeholder="输入内容..."
+          fullWidth
+          margin="normal"
+          variant="outlined"
+          autoFocus
+          fullWidth
+          multiline
+          rows="4"
+          rowsMax="8"
+          value={this.state.editContent}
+          onChange={e => this.setState({editContent: e.target.value})}
+        />
+        <Button color="primary" onClick={() => modalManager.closeTop()}>取消</Button>
+        <Button color="primary" onClick={() => this._handleEditSave()}>保存</Button>
+      </div>
+    )
   }
 
   _handleEditSave() {
@@ -105,36 +110,6 @@ class CardItem extends React.Component {
     remove.call({
       cardId: this.props.cardId
     }, (err) => err && console.log('delete card error:', err))
-  }
-
-  renderEditModal() {
-    // TODO: 需要一个全局的管理器, 而不是每个card一个
-    // 会产生bug: 打开后拖拽会导致card被拖动
-    return this.state.isShowEditModel && (
-      <EditModal
-        open={this.state.isShowEditModel}
-        onClose={() => this.setState({isShowEditModel: false})}
-        onDrag={() => false}
-      >
-        <main>
-          <TextField
-            placeholder="输入内容..."
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            autoFocus
-            fullWidth
-            multiline
-            rows="4"
-            rowsMax="8"
-            value={this.state.editContent}
-            onChange={e => this.setState({editContent: e.target.value})}
-          />
-          <Button color="primary" onClick={() => this.setState({isShowEditModel: false})}>取消</Button>
-          <Button color="primary" onClick={() => this._handleEditSave()}>保存</Button>
-        </main>
-      </EditModal>
-    )
   }
 
   renderToggleMenu() {
@@ -177,7 +152,6 @@ class CardItem extends React.Component {
           <MoreHorizIcon />
         </div>
         { this.renderToggleMenu() }
-        { this.renderEditModal() }
       </Root>
     )
   }
