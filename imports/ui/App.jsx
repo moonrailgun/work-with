@@ -12,15 +12,10 @@ import Info from './Info.jsx';
 import LanguageToggle from './components/LanguageToggle.jsx';
 import NavBar from './components/NavBar.jsx';
 import { ThemeProvider } from 'styled-components';
+import theme from './utils/theme';
 
 import { createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-
-const theme = createMuiTheme({
-  typography: {
-    useNextVariants: true,
-  },
-});
 
 class App extends React.Component {
   state = {
