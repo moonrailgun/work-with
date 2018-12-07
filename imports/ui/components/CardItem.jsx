@@ -10,6 +10,9 @@ import Paper from '@material-ui/core/Paper';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
+import Modal from '@material-ui/core/Modal';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import NotesIcon from '@material-ui/icons/Notes';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
@@ -55,9 +58,27 @@ const Root = styled.div`
   }
 `
 
+const EditModal = styled(Modal)`
+  main {
+    position: absolute;
+    width: ${props => props.theme.spacing.unit * 70}px;
+    background-color: ${props => props.theme.palette.background.paper};
+    box-shadow: ${props => props.theme.shadows[5]};
+    border-radius: ${props => props.theme.shape.borderRadius}px;
+    padding: ${props => props.theme.spacing.unit * 4}px;
+    padding-top: ${props => props.theme.spacing.unit * 3}px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    outline: 0;
+  }
+`
+
 class CardItem extends React.Component {
   state = {
-    isShowToggleMenu: false
+    isShowToggleMenu: false,
+    isShowEditModel: false,
+    editContent: '',
   }
   _toggleMenuRef = null;
 
@@ -66,12 +87,56 @@ class CardItem extends React.Component {
     this.setState({isShowToggleMenu: true})
   }
 
+  _handleEdit() {
+    this.setState({
+      isShowToggleMenu: false,
+      isShowEditModel: true,
+      editContent: this.props.cardContent
+    });
+  }
+
+  _handleEditSave() {
+    console.log('TODO 保存变更:', this.state.editContent);
+  }
+
   _handleDelete() {
     this.setState({isShowToggleMenu: false});
     console.log('delete card:', this.props.cardId);
     remove.call({
       cardId: this.props.cardId
     }, (err) => err && console.log('delete card error:', err))
+  }
+
+  renderEditModal() {
+    // TODO: 需要一个全局的管理器, 而不是每个card一个
+    // 会产生bug: 打开后拖拽会导致card被拖动
+    return this.state.isShowEditModel && (
+      <EditModal
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+        open={this.state.isShowEditModel}
+        onClose={() => this.setState({isShowEditModel: false})}
+        onDrag={() => false}
+      >
+        <main>
+          <TextField
+            placeholder="输入内容..."
+            fullWidth
+            margin="normal"
+            variant="outlined"
+            autoFocus
+            fullWidth
+            multiline
+            rows="4"
+            rowsMax="8"
+            value={this.state.editContent}
+            onChange={e => this.setState({editContent: e.target.value})}
+          />
+          <Button color="primary" onClick={() => this.setState({isShowEditModel: false})}>取消</Button>
+          <Button color="primary" onClick={() => this._handleEditSave()}>保存</Button>
+        </main>
+      </EditModal>
+    )
   }
 
   renderToggleMenu() {
@@ -91,6 +156,7 @@ class CardItem extends React.Component {
             <Paper>
               <ClickAwayListener onClickAway={() => this.setState({isShowToggleMenu: false})}>
                 <MenuList>
+                  <MenuItem onClick={() => this._handleEdit()}>{__('common.edit')}</MenuItem>
                   <MenuItem onClick={() => console.log('TODO:move')}>{__('common.move')}</MenuItem>
                   <MenuItem onClick={() => this._handleDelete()}>{__('common.delete')}</MenuItem>
                 </MenuList>
@@ -107,12 +173,13 @@ class CardItem extends React.Component {
       <Root>
         <div className="type"><NotesIcon /></div>
         <div className="main">
-          <Markdown>{this.props.children}</Markdown>
+          <Markdown>{this.props.cardContent}</Markdown>
         </div>
         <div className="action" onClick={(e) => this._handleClickMore(e)}>
           <MoreHorizIcon />
         </div>
         { this.renderToggleMenu() }
+        { this.renderEditModal() }
       </Root>
     )
   }
@@ -120,6 +187,7 @@ class CardItem extends React.Component {
 
 CardItem.propTypes = {
   cardId: PropTypes.string,
+  cardContent: PropTypes.string,
 }
 
 export default CardItem;

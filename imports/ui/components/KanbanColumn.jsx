@@ -213,9 +213,7 @@ class KanbanColumn extends React.Component {
               provided.draggableProps.style
             )}
           >
-            <CardItem cardId={card._id}>
-              {card.content}
-            </CardItem>
+            <CardItem cardId={card._id} cardContent={card.content} />
           </div>
         )}
       </Draggable>

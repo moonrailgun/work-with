@@ -3,6 +3,7 @@
     "name": "看板"
   },
   "common": {
+    "edit": "编辑",
     "delete": "删除",
     "move": "移动"
   }

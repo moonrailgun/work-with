@@ -3,6 +3,7 @@
     "name": "Kanban"
   },
   "common": {
+    "edit": "Edit",
     "delete": "Delete",
     "move": "Move"
   }
