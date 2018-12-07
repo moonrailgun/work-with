@@ -50,7 +50,10 @@ class KanbanRoute extends React.Component {
 
 const route = withTracker(({match}) => {
   const kanbanId = match.params.kanbanId;
-  localStorage.setItem('last-kanban-id', kanbanId);
+  const userId = Meteor.userId();
+  if(userId) {
+    localStorage.setItem(`last-kanban-id#${userId}`, kanbanId);
+  }
 
   const allKanbanHandler = Meteor.subscribe('kanban.all');
   const allKanbanColsHandler = Meteor.subscribe('kanban.cols.all', { kanbanId });

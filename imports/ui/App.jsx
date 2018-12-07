@@ -25,11 +25,10 @@ const theme = createMuiTheme({
 class App extends React.Component {
   state = {
     redirectTo: '',
-    defaultKanbanId: localStorage.getItem('last-kanban-id'),
   }
 
   renderRedirect() {
-    const { redirectTo, defaultKanbanId } = this.state;
+    const { redirectTo } = this.state;
     const { pathname } = location;
     const { user } = this.props;
 
@@ -39,10 +38,11 @@ class App extends React.Component {
     } else if(pathname === '/') {
       if(!user) {
         redirect = <Redirect to="/login" />
-      }else if(defaultKanbanId) {
-        redirect = <Redirect to={'/kanban/' + defaultKanbanId} />
       }else {
-        redirect = <Redirect to="/dashboard" />
+        let defaultKanbanId = localStorage.getItem(`last-kanban-id#${user._id}`);
+        let to = defaultKanbanId ? `/kanban/${defaultKanbanId}` : '/dashboard';
+
+        redirect = <Redirect to={to} />
       }
     }
 
