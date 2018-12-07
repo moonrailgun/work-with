@@ -112,8 +112,6 @@ class CardItem extends React.Component {
     // 会产生bug: 打开后拖拽会导致card被拖动
     return this.state.isShowEditModel && (
       <EditModal
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
         open={this.state.isShowEditModel}
         onClose={() => this.setState({isShowEditModel: false})}
         onDrag={() => false}

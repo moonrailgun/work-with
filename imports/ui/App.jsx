@@ -23,12 +23,9 @@ const theme = createMuiTheme({
 });
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      redirectTo: '',
-      defaultKanban: '',
-    };
+  state = {
+    redirectTo: '',
+    defaultKanban: localStorage.getItem('last-kanban'),
   }
 
   renderRedirect() {
@@ -40,10 +37,12 @@ class App extends React.Component {
     if (redirectTo && redirectTo !== pathname) {
       redirect = <Redirect to={redirectTo} />
     } else if(pathname === '/') {
-      if(defaultKanban) {
-        redirect = <Redirect to={defaultKanban} />
-      }else if(!user) {
+      if(!user) {
         redirect = <Redirect to="/login" />
+      }else if(defaultKanban) {
+        redirect = <Redirect to={defaultKanban} />
+      }else {
+        redirect = <Redirect to="/dashboard" />
       }
     }
 
@@ -56,18 +55,16 @@ class App extends React.Component {
         <CssBaseline />
         <LanguageToggle />
         <ThemeProvider theme={theme}>
-          <BrowserRouter>
-            <div id="basic-route">
-              <Route component={NavBar}></Route>
-              <Switch>
-                <Route path="/login" component={Login} />
-                <Route path="/register" component={Register} />
-                <Route path="/dashboard" component={Dashboard} />
-                <Route path="/kanban/:kanbanId?" component={Kanban} />
-                <Route component={NotFound} />
-              </Switch>
-            </div>
-          </BrowserRouter>
+          <div id="basic-route">
+            <Route component={NavBar}></Route>
+            <Switch>
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/kanban/:kanbanId?" component={Kanban} />
+              <Route component={NotFound} />
+            </Switch>
+          </div>
         </ThemeProvider>
       </div>
     )

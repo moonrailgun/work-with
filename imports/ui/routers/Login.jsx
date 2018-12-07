@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { withTracker } from 'meteor/react-meteor-data';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -20,16 +22,15 @@ import Snackbar from '@material-ui/core/Snackbar';
 
 import { ToastMessageContent } from '../components/ToastMessage';
 
-const styles = theme => ({
-  root: {
-    marginTop: 140,
-    width: 320,
-  },
-  loginContainer: {
-    display: 'flex',
-    flexDirection: 'column'
+const LoginCard = styled(Card)`
+  margin-top: 140px;
+  width: 320px;
+
+  .flex-col {
+    display: flex;
+    flex-direction: column;
   }
-})
+`
 
 class Login extends React.Component {
   constructor(props) {
@@ -70,9 +71,21 @@ class Login extends React.Component {
     this.props.history.push('/register');
   }
 
-  render() {
-    const { classes } = this.props;
+  componentDidMount() {
+    if(this.props.user) {
+      this.props.history.push('/');
+    }
+  }
 
+  shouldComponentUpdate(nextProps) {
+    if(nextProps.user) {
+      console.log('this.props.history', this.props.history.location);
+      this.props.history.push('/');
+      console.log('this.props.history', this.props.history.location);
+    }
+  }
+
+  render() {
     return (
       <Grid
         container
@@ -81,8 +94,8 @@ class Login extends React.Component {
         alignItems="center"
       >
         <Grid item>
-          <Card className={classes.root}>
-            <CardContent className={classes.loginContainer}>
+          <LoginCard>
+            <CardContent className="flex-col">
               <Typography variant="h5" noWrap>登录</Typography>
               <Snackbar
                 anchorOrigin={{
@@ -108,7 +121,7 @@ class Login extends React.Component {
                   ]}
                 />
               </Snackbar>
-              <form onSubmit={(e) => this._handleLogin(e)} className={classes.loginContainer}>
+              <form onSubmit={(e) => this._handleLogin(e)} className="flex-col">
                 <TextField
                   id="login-email"
                   type="email"
@@ -117,9 +130,7 @@ class Login extends React.Component {
                   value={this.state.email}
                   onChange={(e) => this.setState({email: e.target.value})}
                   />
-                <FormControl
-                  margin="dense"
-                  >
+                <FormControl margin="dense">
                   <InputLabel htmlFor="login-password">密码</InputLabel>
                   <Input
                     id="login-password"
@@ -137,9 +148,7 @@ class Login extends React.Component {
                     }
                     />
                 </FormControl>
-                <FormControl
-                  margin="normal"
-                  >
+                <FormControl margin="normal">
                   <Button
                     type="submit"
                     variant="contained"
@@ -148,9 +157,7 @@ class Login extends React.Component {
                     登录
                   </Button>
                 </FormControl>
-                <FormControl
-                  margin="dense"
-                  >
+                <FormControl margin="dense">
                   <Button
                     color="secondary"
                     onClick={() => this.props.history.push('/register')}
@@ -160,15 +167,15 @@ class Login extends React.Component {
                 </FormControl>
               </form>
             </CardContent>
-          </Card>
+          </LoginCard>
         </Grid>
       </Grid>
     )
   }
 }
 
-Login.propTypes = {
-  classes: PropTypes.object.isRequired,
-}
-
-export default withStyles(styles)(Login);
+export default withTracker(() => {
+  return {
+    user: Meteor.user(),
+  }
+})(Login);
