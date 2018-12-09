@@ -37,7 +37,7 @@ const Root = styled.div`
   }
 
   .type, .action {
-    & > svg {
+    svg {
       font-size: 1rem;
       width: 1rem;
       height: 1rem;
@@ -51,7 +51,7 @@ const Root = styled.div`
   .action {
     cursor: pointer;
 
-    & > svg {
+    svg {
       &:hover, &:active {
         color: ${props => props.theme.palette.primary['light']};
       }
@@ -149,8 +149,10 @@ class CardItem extends React.Component {
         <div className="main">
           <Markdown>{this.props.cardContent}</Markdown>
         </div>
-        <div className="action" onClick={(e) => this._handleClickMore(e)}>
-          <MoreHorizIcon />
+        <div className="action">
+          <span onClick={(e) => this._handleClickMore(e)}>
+            <MoreHorizIcon />
+          </span>
         </div>
         { this.renderToggleMenu() }
       </Root>
