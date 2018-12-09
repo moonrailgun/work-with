@@ -101,8 +101,11 @@ class CardItem extends React.Component {
   }
 
   _handleEditSave() {
-    let value = this._cardEditRef.value;
-    console.log('TODO 保存变更:', value);
+    const ref = this._cardEditRef.current;
+    if(!ref) return;
+    let value = ref.value;
+    let cardId = this.props.cardId;
+    console.log('TODO 保存变更:', cardId, value);
   }
 
   _handleDelete() {
