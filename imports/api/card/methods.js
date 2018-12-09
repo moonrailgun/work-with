@@ -62,6 +62,26 @@ export const assign = new ValidatedMethod({
   }
 })
 
+export const update = new ValidatedMethod({
+  name: 'card.update',
+  validate: new SimpleSchema({
+    cardId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id,
+    },
+    content: {
+      type: String,
+    }
+  }).validator(),
+  run({cardId, content}) {
+    return Card.update(cardId, {
+      $set: {
+        content,
+      }
+    });
+  }
+})
+
 export const remove = new ValidatedMethod({
   name: 'card.remove',
   validate: new SimpleSchema({
@@ -95,6 +115,7 @@ export const remove = new ValidatedMethod({
 const ALLOW_METHODS = _.map([
   insert,
   assign,
+  update,
   remove,
 ], 'name');
 

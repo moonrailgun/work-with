@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Markdown from './Markdown';
-import { remove } from '/imports/api/card/methods';
+import { update, remove } from '/imports/api/card/methods';
 import { modalManager } from '/imports/ui/utils/index';
 
 import Popper from '@material-ui/core/Popper';
@@ -106,6 +106,16 @@ class CardItem extends React.Component {
     let value = ref.value;
     let cardId = this.props.cardId;
     console.log('TODO 保存变更:', cardId, value);
+    update.call({
+      cardId,
+      content: value
+    }, (err) => {
+      if(err) {
+        console.error('carditem _handleEditSave', err)
+      } else {
+        modalManager.closeTop();
+      }
+    });
   }
 
   _handleDelete() {
