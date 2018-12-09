@@ -63,8 +63,8 @@ class CardItem extends React.Component {
   state = {
     isShowToggleMenu: false,
     isShowEditModel: false,
-    editContent: '',
   }
+  _cardEditRef = React.createRef();
   _toggleMenuRef = null;
 
   _handleClickMore(e) {
@@ -82,6 +82,7 @@ class CardItem extends React.Component {
     modalManager.open(
       <div>
         <TextField
+          inputProps={{ref: this._cardEditRef}}
           placeholder="输入内容..."
           fullWidth
           margin="normal"
@@ -91,8 +92,7 @@ class CardItem extends React.Component {
           multiline
           rows="4"
           rowsMax="8"
-          value={this.state.editContent}
-          onChange={e => this.setState({editContent: e.target.value})}
+          defaultValue={this.props.cardContent}
         />
         <Button color="primary" onClick={() => modalManager.closeTop()}>取消</Button>
         <Button color="primary" onClick={() => this._handleEditSave()}>保存</Button>
@@ -101,7 +101,8 @@ class CardItem extends React.Component {
   }
 
   _handleEditSave() {
-    console.log('TODO 保存变更:', this.state.editContent);
+    let value = this._cardEditRef.value;
+    console.log('TODO 保存变更:', value);
   }
 
   _handleDelete() {
