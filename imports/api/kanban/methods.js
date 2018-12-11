@@ -135,6 +135,34 @@ export const moveCard = new ValidatedMethod({
   }
 })
 
+export const archiveCol = new ValidatedMethod({
+  name: 'kanban.archiveCol',
+  validate: new SimpleSchema({
+    colId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id,
+    }
+  }).validator(),
+  run({colId}) {
+    const col = KanbanColumn.findOne(colId);
+    const {
+      cards,
+      kanbanId,
+    } = col;
+    KanbanColumn.update(colId, {
+      $set: {
+        cards: []
+      }
+    })
+
+    return Kanban.update(kanbanId, {
+      $push: {
+        archivedCards: cards
+      }
+    })
+  }
+})
+
 const ALLOW_METHODS = _.map([
   insert,
   addKanbanColumn,

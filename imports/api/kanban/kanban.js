@@ -52,6 +52,11 @@ Kanban.schema = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id,
     defaultValue: [],
   },
+  archivedCards: {
+    type: [String],
+    regEx: SimpleSchema.RegEx.Id,
+    defaultValue: [],
+  },
   teamId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
