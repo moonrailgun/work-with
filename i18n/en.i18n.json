@@ -1,6 +1,7 @@
 {
   "kanban": {
-    "name": "Kanban"
+    "name": "Kanban",
+    "archive": "Archive"
   },
   "common": {
     "edit": "Edit",

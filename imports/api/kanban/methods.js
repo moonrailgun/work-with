@@ -154,10 +154,24 @@ export const archiveCol = new ValidatedMethod({
         cards: []
       }
     })
+    Card.update({
+      _id: {
+        $in: cards
+      }
+    }, {
+      $set: {
+        archived: true
+      }
+    }, {
+      multi: true,
+      upsert: false,
+    })
 
     return Kanban.update(kanbanId, {
       $push: {
-        archivedCards: cards
+        archivedCards: {
+          $each: cards
+        }
       }
     })
   }

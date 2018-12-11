@@ -35,6 +35,10 @@ Card.schema = new SimpleSchema({
     type: [String],
     optional: true,
   },
+  archived: {
+    type: Boolean,
+    defaultValue: false,
+  },
   createdAt: {
     type: Date,
     autoValue: () => new Date(),

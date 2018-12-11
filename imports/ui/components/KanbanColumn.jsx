@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { insert as insertCard } from '/imports/api/card/methods';
+import { archiveCol } from '/imports/api/kanban/methods';
 import styled from 'styled-components';
 import CardItem from './CardItem';
 
@@ -127,6 +128,17 @@ class KanbanColumn extends React.Component {
     this.setState({newCardContent: '', isAddCard: false});
   }
 
+  // 归档列
+  _handleArchiveCol() {
+    let colId = this.props.col._id;
+    archiveCol.call({colId}, (err) => {
+      this.setState({isShowToggleMenu: false});
+      if (err) {
+        console.error(err);
+      }
+    })
+  }
+
   renderToggleMenu() {
     return (
       <Popper
@@ -144,7 +156,7 @@ class KanbanColumn extends React.Component {
             <Paper>
               <ClickAwayListener onClickAway={() => this.setState({isShowToggleMenu: false})}>
                 <MenuList>
-                  <MenuItem onClick={() => console.log('aaaaa')}>Profile</MenuItem>
+                  <MenuItem onClick={() => this._handleArchiveCol()}>{__('kanban.archive')}</MenuItem>
                   <MenuItem onClick={() => console.log('aaaaa')}>My account</MenuItem>
                   <MenuItem onClick={() => console.log('aaaaa')}>Logout</MenuItem>
                 </MenuList>

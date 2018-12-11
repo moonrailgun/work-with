@@ -1,6 +1,7 @@
 {
   "kanban": {
-    "name": "看板"
+    "name": "看板",
+    "archive": "归档"
   },
   "common": {
     "edit": "编辑",
