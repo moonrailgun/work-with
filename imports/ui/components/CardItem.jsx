@@ -105,7 +105,6 @@ class CardItem extends React.Component {
     if(!ref) return;
     let value = ref.value;
     let cardId = this.props.cardId;
-    console.log('TODO 保存变更:', cardId, value);
     update.call({
       cardId,
       content: value
@@ -120,7 +119,6 @@ class CardItem extends React.Component {
 
   _handleDelete() {
     this.setState({isShowToggleMenu: false});
-    console.log('delete card:', this.props.cardId);
     remove.call({
       cardId: this.props.cardId
     }, (err) => err && console.log('delete card error:', err))
