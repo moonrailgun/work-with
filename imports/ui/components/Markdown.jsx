@@ -14,12 +14,16 @@ const StyledMarkdown = styled(ReactMarkdown)`
   pre {
     overflow: auto;
   }
+
+  img {
+    max-width: 100%;
+  }
 `
 
 class Markdown extends React.Component {
   render() {
     return (
-      <StyledMarkdown>
+      <StyledMarkdown linkTarget="_blank">
         {xss(this.props.children)}
       </StyledMarkdown>
     )
