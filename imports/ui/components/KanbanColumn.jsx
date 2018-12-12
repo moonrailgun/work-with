@@ -31,7 +31,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   ...draggableStyle,
 });
 
-const styles = ({shape, spacing, shadows, palette, typography}) => ({
+const styles = ({shape, spacing, shadows, palette, typography, zIndex}) => ({
   gridItem: {
     flexShrink: 0,
     position: 'relative',
@@ -66,6 +66,9 @@ const styles = ({shape, spacing, shadows, palette, typography}) => ({
       color: palette.primary['light'],
       cursor: 'pointer'
     }
+  },
+  colToggleMenu: {
+    zIndex: zIndex.tooltip
   },
   cardAddField: {
     padding: spacing.unit,
@@ -140,8 +143,13 @@ class KanbanColumn extends React.Component {
   }
 
   renderToggleMenu() {
+    const {
+      classes,
+    } = this.props;
+
     return (
       <Popper
+        className={classes.colToggleMenu}
         open={this.state.isShowToggleMenu}
         placement="bottom-end"
         anchorEl={this._toggleMenuRef}
