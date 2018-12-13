@@ -11,23 +11,27 @@ class LightboxImage extends React.Component {
   render() {
     const {
       src,
+      title,
+      alt,
     } = this.props;
 
     return (
-      <div>
-        <img src={src} />
+      <React.Fragment>
+        <img src={src} title={title} alt={alt} onClick={() => this.setState({isOpen: true})} />
         {
           this.state.isOpen && (
             <Lightbox mainSrc={src} onCloseRequest={() => this.setState({isOpen: false})} />
           )
         }
-      </div>
+      </React.Fragment>
     )
   }
 }
 
 LightboxImage.propTypes = {
   src: PropTypes.string,
+  title: PropTypes.string,
+  alt: PropTypes.string,
 }
 
 export default LightboxImage;
