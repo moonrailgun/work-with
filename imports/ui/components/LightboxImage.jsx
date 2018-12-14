@@ -1,7 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
+
+const Root = styled.span`
+  > img {
+    cursor: pointer;
+  }
+`
 
 class LightboxImage extends React.Component {
   state = {
@@ -16,14 +23,14 @@ class LightboxImage extends React.Component {
     } = this.props;
 
     return (
-      <React.Fragment>
+      <Root>
         <img src={src} title={title} alt={alt} onClick={() => this.setState({isOpen: true})} />
         {
           this.state.isOpen && (
             <Lightbox mainSrc={src} onCloseRequest={() => this.setState({isOpen: false})} />
           )
         }
-      </React.Fragment>
+      </Root>
     )
   }
 }

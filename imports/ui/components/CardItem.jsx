@@ -49,9 +49,8 @@ const Root = styled.div`
   }
 
   .action {
-    cursor: pointer;
-
     svg {
+      cursor: pointer;
       &:hover, &:active {
         color: ${props => props.theme.palette.primary['light']};
       }
