@@ -39,6 +39,10 @@ Card.schema = new SimpleSchema({
     type: Boolean,
     defaultValue: false,
   },
+  sequenceValue: {
+    type: Number,
+    defaultValue: 0,
+  },
   createdAt: {
     type: Date,
     autoValue: () => new Date(),

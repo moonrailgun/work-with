@@ -19,6 +19,17 @@ class KanbanCollection extends Mongo.Collection {
     KanbanColumn.remove({$or: or});
     return result;
   }
+
+  getNextSequenceValue(selector) {
+    const res = this.update(selector, {
+      $inc: {
+        sequenceValue: 1,
+      }
+    })
+    const kanban = this.findOne(selector);
+
+    return kanban.sequenceValue;
+  }
 }
 
 export const Kanban = new KanbanCollection('kanban');
@@ -66,6 +77,10 @@ Kanban.schema = new SimpleSchema({
   userId: {
     type: String,
     regEx: SimpleSchema.RegEx.Id
+  },
+  sequenceValue: {
+    type: Number,
+    defaultValue: 0,
   },
   createdAt: {
     type: Date,
