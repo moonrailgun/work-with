@@ -142,6 +142,10 @@ class KanbanColumn extends React.Component {
     })
   }
 
+  _handleCardClick(card) {
+    this.props.onCardClicked && this.props.onCardClicked(card);
+  }
+
   renderToggleMenu() {
     const {
       classes,
@@ -233,7 +237,7 @@ class KanbanColumn extends React.Component {
               provided.draggableProps.style
             )}
           >
-            <CardItem cardId={card._id} cardContent={card.content} />
+            <CardItem cardId={card._id} cardContent={card.content} onClick={() => this._handleCardClick(card)} />
           </div>
         )}
       </Draggable>
@@ -351,6 +355,7 @@ KanbanColumn.propTypes = {
   newCol: PropTypes.bool,
   col: PropTypes.object,
   cards: PropTypes.array,
+  onCardClicked: PropTypes.func,
 };
 
 export default withStyles(styles)(KanbanColumn);

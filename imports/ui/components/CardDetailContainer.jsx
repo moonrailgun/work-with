@@ -49,6 +49,7 @@ const Container = styled.div`
     overflow: hidden;
     transition: width 0.4s ease-in-out;
     width: ${props => props.collapse ? 0 : '280px'};
+    overflow-wrap: break-word;
 
     &::before {
       content: ' ';
@@ -84,6 +85,7 @@ class CardDetailContainer extends React.Component {
         </nav>
         <main>
           card detail....
+          {JSON.stringify(this.props.card)}
         </main>
       </Container>
     )

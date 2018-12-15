@@ -154,7 +154,7 @@ class CardItem extends React.Component {
 
   render() {
     return (
-      <Root>
+      <Root onClick={() => this.props.onClick && this.props.onClick()}>
         <div className="type"><NotesIcon /></div>
         <div className="main">
           <Markdown>{this.props.cardContent}</Markdown>
@@ -173,6 +173,7 @@ class CardItem extends React.Component {
 CardItem.propTypes = {
   cardId: PropTypes.string,
   cardContent: PropTypes.string,
+  onClick: PropTypes.func,
 }
 
 export default CardItem;

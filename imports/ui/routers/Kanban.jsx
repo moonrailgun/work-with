@@ -17,6 +17,14 @@ const styles = theme => ({
 })
 
 class KanbanRoute extends React.Component {
+  state = {
+    selectedCard: null,
+  }
+
+  onChangeCardDetail(card) {
+    this.setState({selectedCard: card});
+  }
+
   render() {
     const {
       match,
@@ -36,12 +44,17 @@ class KanbanRoute extends React.Component {
           xs
         >
           <div><h3>{kanbanInfo.title}</h3></div>
-          <KanbanContainer kanbanId={kanbanId} kanbanCols={kanbanCols} kanbanCards={kanbanCards} />
+          <KanbanContainer
+            kanbanId={kanbanId}
+            kanbanCols={kanbanCols}
+            kanbanCards={kanbanCards}
+            onChangeCardDetail={(card) => this.onChangeCardDetail(card)}
+          />
         </Grid>
         <Grid
           item
         >
-          <CardDetailContainer />
+          <CardDetailContainer card={this.state.selectedCard}/>
         </Grid>
       </Grid>
     )
