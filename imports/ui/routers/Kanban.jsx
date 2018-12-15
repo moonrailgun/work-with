@@ -18,11 +18,11 @@ const styles = theme => ({
 
 class KanbanRoute extends React.Component {
   state = {
-    selectedCard: null,
+    selectedCardId: null,
   }
 
-  onChangeCardDetail(card) {
-    this.setState({selectedCard: card});
+  onChangeCardDetail(cardId) {
+    this.setState({selectedCardId: cardId});
   }
 
   render() {
@@ -48,13 +48,13 @@ class KanbanRoute extends React.Component {
             kanbanId={kanbanId}
             kanbanCols={kanbanCols}
             kanbanCards={kanbanCards}
-            onChangeCardDetail={(card) => this.onChangeCardDetail(card)}
+            onChangeCardDetail={(cardId) => this.onChangeCardDetail(cardId)}
           />
         </Grid>
         <Grid
           item
         >
-          <CardDetailContainer card={this.state.selectedCard}/>
+          <CardDetailContainer cardId={this.state.selectedCardId}/>
         </Grid>
       </Grid>
     )

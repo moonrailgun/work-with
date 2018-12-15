@@ -85,7 +85,7 @@ class CardDetailContainer extends React.Component {
         </nav>
         <main>
           card detail....
-          {JSON.stringify(this.props.card)}
+          {JSON.stringify(this.props.cardId)}
         </main>
       </Container>
     )

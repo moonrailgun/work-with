@@ -61,8 +61,8 @@ class KanbanContainer extends React.Component {
     })
   }
 
-  onCardClicked(card) {
-    this.props.onChangeCardDetail && this.props.onChangeCardDetail(card);
+  onCardClicked(cardId) {
+    this.props.onChangeCardDetail && this.props.onChangeCardDetail(cardId);
   }
 
   render() {
@@ -82,7 +82,7 @@ class KanbanContainer extends React.Component {
                   key={col._id}
                   col={col}
                   cards={col.cards.map(cardId => kanbanCards.find(c => c._id === cardId))}
-                  onCardClicked={card => this.onCardClicked(card)}
+                  onCardClicked={cardId => this.onCardClicked(cardId)}
                 />
               ))
             }
