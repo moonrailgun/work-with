@@ -66,19 +66,25 @@ const Container = styled.div`
 
 class CardDetailContainer extends React.Component {
   state = {
-    isShow: true,
+    isShow: false,
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props.cardId !== prevProps.cardId && prevState === false) {
+      this.setState({isShow: true});
+    }
   }
 
   render() {
     return (
-      <Container collapse={this.state.isShow}>
+      <Container collapse={!this.state.isShow}>
         <nav>
           <button onClick={() => this.setState({isShow: !this.state.isShow})}>
             {
               this.state.isShow ? (
-                <FirstPageIcon />
-              ) : (
                 <LastPageIcon />
+              ) : (
+                <FirstPageIcon />
               )
             }
           </button>
