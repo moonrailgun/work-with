@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Card } from '/imports/api/card/card';
 import styled from 'styled-components';
 
 import IconButton from '@material-ui/core/IconButton';
@@ -90,12 +93,23 @@ class CardDetailContainer extends React.Component {
           </button>
         </nav>
         <main>
-          card detail....
-          {JSON.stringify(this.props.cardId)}
+          this.props.cardInfo....
+          {JSON.stringify(this.props.cardInfo)}
         </main>
       </Container>
     )
   }
 }
 
-export default CardDetailContainer;
+CardDetailContainer.propTypes = {
+  cardId: PropTypes.string,
+}
+
+export default withTracker(({cardId}) => {
+  const userId = Meteor.userId();
+
+  return {
+    userId,
+    cardInfo: cardId && Card.findOne(cardId),
+  }
+})(CardDetailContainer);
