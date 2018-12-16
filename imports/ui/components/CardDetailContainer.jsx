@@ -70,7 +70,7 @@ class CardDetailContainer extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(this.props.cardId !== prevProps.cardId && prevState === false) {
+    if(this.props.cardId !== prevProps.cardId && prevState.isShow === false) {
       this.setState({isShow: true});
     }
   }
