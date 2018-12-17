@@ -269,7 +269,6 @@ class KanbanColumn extends React.Component {
   render() {
     const {
       newCol = false,
-      children,
       classes,
       col,
       cards,
@@ -286,7 +285,6 @@ class KanbanColumn extends React.Component {
     if(!newCol) {
       return (
         <Grid {...gridProps}>
-          {children}
           <Droppable droppableId={col._id}>
             {
               (provided, snapshot) => (
