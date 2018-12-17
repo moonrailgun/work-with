@@ -4,18 +4,21 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import classNames from 'classnames';
 import KanbanColumn from './KanbanColumn';
 import { addKanbanColumn, moveCard } from '/imports/api/kanban/methods';
+import styled from 'styled-components';
 
-import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
-const styles = ({shape, spacing, palette, shadows}) => ({
-  root: {
-    padding: spacing.unit,
-    overflow: 'auto',
-    flex: 1,
-    width: '100%',
-  },
-})
+const Container = styled.div`
+  padding: ${props => props.theme.spacing.unit}px;
+  overflow: hidden;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+
+  > div {
+    height: 100%;
+  }
+`
 
 class KanbanContainer extends React.Component {
   _handleDropEnd(result) {
@@ -69,7 +72,7 @@ class KanbanContainer extends React.Component {
     } = this.props;
 
     return (
-      <div className={classes.root}>
+      <Container>
         <Grid container spacing={16} wrap={'nowrap'}>
           <DragDropContext onDragEnd={(res) => this._handleDropEnd(res)}>
             {
@@ -80,7 +83,7 @@ class KanbanContainer extends React.Component {
             <KanbanColumn newCol onAddNew={(title) => this._handleAddCol(title)} />
           </DragDropContext>
         </Grid>
-      </div>
+      </Container>
     )
   }
 }
@@ -91,4 +94,4 @@ KanbanContainer.propTypes = {
   kanbanCards: PropTypes.array
 };
 
-export default withStyles(styles)(KanbanContainer);
+export default KanbanContainer;

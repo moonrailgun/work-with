@@ -14,6 +14,9 @@ const styles = theme => ({
     overflow: 'hidden',
     height: '100%',
   },
+  main: {
+    height: '100%',
+  }
 })
 
 class KanbanRoute extends React.Component {
@@ -36,7 +39,9 @@ class KanbanRoute extends React.Component {
           xs
         >
           <div><h3>{kanbanInfo.title}</h3></div>
-          <KanbanContainer kanbanId={kanbanId} kanbanCols={kanbanCols} kanbanCards={kanbanCards} />
+          <Grid container item xs>
+            <KanbanContainer kanbanId={kanbanId} kanbanCols={kanbanCols} kanbanCards={kanbanCards} />
+          </Grid>
         </Grid>
         <Grid
           item

@@ -41,6 +41,10 @@ const styles = ({shape, spacing, shadows, palette, typography, zIndex}) => ({
     padding: spacing.unit,
     backgroundColor: '#dfe3e6',
     boxShadow: shadows[2],
+    maxHeight: '100%',
+    overflow: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
   },
   colAdd: {
     borderRadius: shape.borderRadius,
@@ -57,8 +61,11 @@ const styles = ({shape, spacing, shadows, palette, typography, zIndex}) => ({
     padding: spacing.unit * 2,
     minWidth: 180,
   },
+  colTitleGrid: {
+    flex: '0 0 auto',
+  },
   colTitle: {
-    flex: 1
+    flex: 1,
   },
   colActionBtn: {
     color: palette.grey['A400'],
@@ -69,6 +76,13 @@ const styles = ({shape, spacing, shadows, palette, typography, zIndex}) => ({
   },
   colToggleMenu: {
     zIndex: zIndex.tooltip
+  },
+  cardList: {
+    flex: '1 1 auto',
+    overflowX: 'inherit',
+    overflowY: 'overlay',
+    marginRight: -spacing.unit,
+    paddingRight: spacing.unit,
   },
   cardAddField: {
     padding: spacing.unit,
@@ -294,6 +308,7 @@ class KanbanColumn extends React.Component {
                   style={getListStyle(snapshot.isDraggingOver)}
                 >
                   <Grid
+                    className={classes.colTitleGrid}
                     container
                     wrap="nowrap"
                     alignItems="center"
@@ -321,8 +336,10 @@ class KanbanColumn extends React.Component {
                     { this.renderToggleMenu() }
                   </Grid>
                   { this.renderCardAdd() }
-                  { this.renderCards(cards) }
-                  { provided.placeholder }
+                  <div className={classes.cardList}>
+                    { this.renderCards(cards) }
+                    { provided.placeholder }
+                  </div>
                 </div>
               )
             }
