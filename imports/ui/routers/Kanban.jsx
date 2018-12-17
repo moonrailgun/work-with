@@ -20,6 +20,14 @@ const styles = theme => ({
 })
 
 class KanbanRoute extends React.Component {
+  state = {
+    selectedCardId: null,
+  }
+
+  onChangeCardDetail(cardId) {
+    this.setState({selectedCardId: cardId});
+  }
+
   render() {
     const {
       match,
@@ -40,13 +48,18 @@ class KanbanRoute extends React.Component {
         >
           <div><h3>{kanbanInfo.title}</h3></div>
           <Grid container item xs>
-            <KanbanContainer kanbanId={kanbanId} kanbanCols={kanbanCols} kanbanCards={kanbanCards} />
+            <KanbanContainer
+              kanbanId={kanbanId}
+              kanbanCols={kanbanCols}
+              kanbanCards={kanbanCards}
+              onChangeCardDetail={(cardId) => this.onChangeCardDetail(cardId)}
+              />
           </Grid>
         </Grid>
         <Grid
           item
         >
-          <CardDetailContainer />
+          <CardDetailContainer cardId={this.state.selectedCardId}/>
         </Grid>
       </Grid>
     )

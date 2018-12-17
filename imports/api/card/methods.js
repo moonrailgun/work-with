@@ -22,10 +22,16 @@ export const insert = new ValidatedMethod({
   run({content, cardColId}) {
     let userId = this.userId;
 
+    let col = KanbanColumn.findOne(cardColId);
+    let kanbanId = col.kanbanId;
+
+    let sequenceValue =  Kanban.getNextSequenceValue(kanbanId);
+
     const cardId = Card.insert({
       creator: userId,
       cardColId,
       content,
+      sequenceValue,
     });
 
     KanbanColumn.update(cardColId, {

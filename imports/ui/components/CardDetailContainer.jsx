@@ -1,4 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withTracker } from 'meteor/react-meteor-data';
+import { Card } from '/imports/api/card/card';
 import styled from 'styled-components';
 
 import IconButton from '@material-ui/core/IconButton';
@@ -49,6 +52,7 @@ const Container = styled.div`
     overflow: hidden;
     transition: width 0.4s ease-in-out;
     width: ${props => props.collapse ? 0 : '280px'};
+    overflow-wrap: break-word;
 
     &::before {
       content: ' ';
@@ -65,29 +69,47 @@ const Container = styled.div`
 
 class CardDetailContainer extends React.Component {
   state = {
-    isShow: true,
+    isShow: false,
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(this.props.cardId !== prevProps.cardId && prevState.isShow === false) {
+      this.setState({isShow: true});
+    }
   }
 
   render() {
     return (
-      <Container collapse={this.state.isShow}>
+      <Container collapse={!this.state.isShow}>
         <nav>
           <button onClick={() => this.setState({isShow: !this.state.isShow})}>
             {
               this.state.isShow ? (
-                <FirstPageIcon />
-              ) : (
                 <LastPageIcon />
+              ) : (
+                <FirstPageIcon />
               )
             }
           </button>
         </nav>
         <main>
-          card detail....
+          this.props.cardInfo....
+          {JSON.stringify(this.props.cardInfo)}
         </main>
       </Container>
     )
   }
 }
 
-export default CardDetailContainer;
+CardDetailContainer.propTypes = {
+  cardId: PropTypes.string,
+}
+
+export default withTracker(({cardId}) => {
+  const userId = Meteor.userId();
+
+  return {
+    userId,
+    cardInfo: cardId && Card.findOne(cardId),
+  }
+})(CardDetailContainer);

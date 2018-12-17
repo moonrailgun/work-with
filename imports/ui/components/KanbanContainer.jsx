@@ -64,6 +64,10 @@ class KanbanContainer extends React.Component {
     })
   }
 
+  onCardClicked(cardId) {
+    this.props.onChangeCardDetail && this.props.onChangeCardDetail(cardId);
+  }
+
   render() {
     const {
       classes,
@@ -77,7 +81,12 @@ class KanbanContainer extends React.Component {
           <DragDropContext onDragEnd={(res) => this._handleDropEnd(res)}>
             {
               kanbanCols.map((col, index) => (
-                <KanbanColumn key={col._id} col={col} cards={col.cards.map(cardId => kanbanCards.find(c => c._id === cardId))} />
+                <KanbanColumn
+                  key={col._id}
+                  col={col}
+                  cards={col.cards.map(cardId => kanbanCards.find(c => c._id === cardId))}
+                  onCardClicked={cardId => this.onCardClicked(cardId)}
+                />
               ))
             }
             <KanbanColumn newCol onAddNew={(title) => this._handleAddCol(title)} />
@@ -91,7 +100,8 @@ class KanbanContainer extends React.Component {
 KanbanContainer.propTypes = {
   kanbanId: PropTypes.string.isRequired,
   kanbanCols: PropTypes.array,
-  kanbanCards: PropTypes.array
+  kanbanCards: PropTypes.array,
+  onChangeCardDetail: PropTypes.func,
 };
 
 export default KanbanContainer;
