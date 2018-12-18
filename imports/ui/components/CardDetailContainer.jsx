@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
+import miment from 'miment';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Card } from '/imports/api/card/card';
 import styled from 'styled-components';
+import Markdown from './Markdown';
 
 import IconButton from '@material-ui/core/IconButton';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
@@ -64,10 +66,23 @@ const Container = styled.div`
       background-color: #ccc;
       transform: scaleX(0.5);
     }
+
+    .info {
+      padding: ${props => props.theme.spacing.unit}px;
+      height: 100%;
+      overflow: auto;
+    }
+
+    .tip {
+      text-align: center;
+      margin-top: ${props => props.theme.spacing.unit * 8}px;
+      color: #666;
+      font-size: 18px;
+    }
   }
 `
 
-class CardDetailContainer extends React.Component {
+class CardDetailContainer extends Component {
   state = {
     isShow: false,
   }
@@ -79,6 +94,10 @@ class CardDetailContainer extends React.Component {
   }
 
   render() {
+    const {
+      cardInfo,
+    } = this.props;
+    console.log('this.props.cardInfo', cardInfo);
     return (
       <Container collapse={!this.state.isShow}>
         <nav>
@@ -93,8 +112,20 @@ class CardDetailContainer extends React.Component {
           </button>
         </nav>
         <main>
-          this.props.cardInfo....
-          {JSON.stringify(this.props.cardInfo)}
+          {
+            cardInfo ? (
+              <div className="info">
+                <p>#{cardInfo.sequenceValue}</p>
+                <Markdown>{cardInfo.content || ''}</Markdown>
+                <div className="tags">{cardInfo.tags}</div>
+                <div className="createdAt">创建于:{miment(cardInfo.createdAt).format()}</div>
+              </div>
+            ) : (
+              <Fragment>
+                <p className="tip">请点击卡片查看详情</p>
+              </Fragment>
+            )
+          }
         </main>
       </Container>
     )
