@@ -8,6 +8,7 @@ import CardDetailContainer from '/imports/ui/components/CardDetailContainer';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Hidden from '@material-ui/core/Hidden';
 
 const styles = theme => ({
   container: {
@@ -39,7 +40,7 @@ class KanbanRoute extends React.Component {
     const { kanbanId } = match.params;
 
     return (
-      <Grid container className={classes.container}>
+      <Grid container wrap="nowrap" className={classes.container}>
         <Grid
           container
           direction="column"
@@ -59,7 +60,9 @@ class KanbanRoute extends React.Component {
         <Grid
           item
         >
-          <CardDetailContainer cardId={this.state.selectedCardId}/>
+          <Hidden smDown>
+            <CardDetailContainer cardId={this.state.selectedCardId}/>
+          </Hidden>
         </Grid>
       </Grid>
     )
