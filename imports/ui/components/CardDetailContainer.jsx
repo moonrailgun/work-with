@@ -48,37 +48,37 @@ const Container = styled.div`
       }
     }
   }
+`
 
-  main {
-    position: relative;
-    overflow: hidden;
-    transition: width 0.4s ease-in-out;
-    width: ${props => props.collapse ? 0 : '280px'};
-    overflow-wrap: break-word;
+const MainInfo = styled.main`
+  position: relative;
+  overflow: hidden;
+  transition: width 0.4s ease-in-out;
+  width: ${props => props.collapse ? 0 : '280px'};
+  overflow-wrap: break-word;
 
-    &::before {
-      content: ' ';
-      width: 1px;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      background-color: #ccc;
-      transform: scaleX(0.5);
-    }
+  &::before {
+    content: ' ';
+    width: 1px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #ccc;
+    transform: scaleX(0.5);
+  }
 
-    .info {
-      padding: ${props => props.theme.spacing.unit}px;
-      height: 100%;
-      overflow: auto;
-    }
+  .info {
+    padding: ${props => props.theme.spacing.unit}px;
+    height: 100%;
+    overflow: auto;
+  }
 
-    .tip {
-      text-align: center;
-      margin-top: ${props => props.theme.spacing.unit * 8}px;
-      color: #666;
-      font-size: 18px;
-    }
+  .tip {
+    text-align: center;
+    margin-top: ${props => props.theme.spacing.unit * 8}px;
+    color: #666;
+    font-size: 18px;
   }
 `
 
@@ -93,11 +93,33 @@ class CardDetailContainer extends Component {
     }
   }
 
-  render() {
+  renderMain() {
     const {
       cardInfo,
     } = this.props;
     console.log('this.props.cardInfo', cardInfo);
+
+    return (
+      <MainInfo>
+        {
+          cardInfo ? (
+            <div className="info">
+              <p>#{cardInfo.sequenceValue}</p>
+              <Markdown>{cardInfo.content || ''}</Markdown>
+              <div className="tags">{cardInfo.tags}</div>
+              <div className="createdAt">创建于:{miment(cardInfo.createdAt).format()}</div>
+            </div>
+          ) : (
+            <Fragment>
+              <p className="tip">请点击卡片查看详情</p>
+            </Fragment>
+          )
+        }
+      </MainInfo>
+    )
+  }
+
+  render() {
     return (
       <Container collapse={!this.state.isShow}>
         <nav>
@@ -111,22 +133,7 @@ class CardDetailContainer extends Component {
             }
           </button>
         </nav>
-        <main>
-          {
-            cardInfo ? (
-              <div className="info">
-                <p>#{cardInfo.sequenceValue}</p>
-                <Markdown>{cardInfo.content || ''}</Markdown>
-                <div className="tags">{cardInfo.tags}</div>
-                <div className="createdAt">创建于:{miment(cardInfo.createdAt).format()}</div>
-              </div>
-            ) : (
-              <Fragment>
-                <p className="tip">请点击卡片查看详情</p>
-              </Fragment>
-            )
-          }
-        </main>
+        { this.renderMain() }
       </Container>
     )
   }
