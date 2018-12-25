@@ -73,6 +73,11 @@ const MainInfo = styled.main`
     padding: ${props => props.theme.spacing.unit}px;
     height: 100%;
     overflow: auto;
+
+    .info-main {
+      min-height: 120px;
+      padding: ${props => props.theme.spacing.unit}px 0;
+    }
   }
 
   .tip {
@@ -111,7 +116,9 @@ class CardDetailContainer extends Component {
             <div className="info">
               <p><HelperText>#</HelperText>{cardInfo.sequenceValue}</p>
               <Divider light />
-              <Markdown>{cardInfo.content || ''}</Markdown>
+              <div className="info-main">
+                <Markdown>{cardInfo.content || ''}</Markdown>
+              </div>
               <Divider light />
               {
                 cardInfo.tags && (
