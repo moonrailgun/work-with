@@ -251,7 +251,7 @@ class KanbanColumn extends React.Component {
               provided.draggableProps.style
             )}
           >
-            <CardItem cardId={card._id} cardContent={card.content} onClick={() => this._handleCardClick(card._id)} />
+            <CardItem card={card} cardId={card._id} cardContent={card.content} onClick={() => this._handleCardClick(card._id)} />
           </div>
         )}
       </Draggable>

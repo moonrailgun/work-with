@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Markdown from './Markdown';
 import { update, remove } from '/imports/api/card/methods';
 import { modalManager } from '/imports/ui/utils/index';
+import UserAvatar from '/imports/ui/components/card/UserAvatar';
 
 import Popper from '@material-ui/core/Popper';
 import Grow from '@material-ui/core/Grow';
@@ -153,11 +154,20 @@ class CardItem extends React.Component {
   }
 
   render() {
+    let card = this.props.card || {};
+
     return (
       <Root onClick={() => this.props.onClick && this.props.onClick()}>
         <div className="type"><NotesIcon /></div>
         <div className="main">
           <Markdown>{this.props.cardContent}</Markdown>
+        </div>
+        <div className="footer">
+          {
+            card.assignTo && (
+              <UserAvatar userId={card.assignTo} />
+            )
+          }
         </div>
         <div className="action">
           <span onClick={(e) => this._handleClickMore(e)}>
@@ -171,6 +181,7 @@ class CardItem extends React.Component {
 }
 
 CardItem.propTypes = {
+  card: PropTypes.object,
   cardId: PropTypes.string,
   cardContent: PropTypes.string,
   onClick: PropTypes.func,

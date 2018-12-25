@@ -82,6 +82,8 @@ const route = withTracker(({match}) => {
   const kanbanInfo = Kanban.find(kanbanId).fetch()[0] || {};
   let kanbanCols = [];
   let kanbanCards = [];
+
+  // 看板信息已加载
   if(kanbanInfo && kanbanInfo.cols) {
     let cols = kanbanInfo.cols || [];
     kanbanCols = KanbanColumn.find({
