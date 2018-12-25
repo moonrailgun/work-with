@@ -105,7 +105,7 @@ class CardDetailContainer extends Component {
     console.log('this.props.cardInfo', cardInfo);
 
     return (
-      <MainInfo>
+      <MainInfo collapse={!this.state.isShow}>
         {
           cardInfo ? (
             <div className="info">
@@ -135,7 +135,7 @@ class CardDetailContainer extends Component {
 
   render() {
     return (
-      <Container collapse={!this.state.isShow}>
+      <Container>
         <nav>
           <button onClick={() => this.setState({isShow: !this.state.isShow})}>
             {
