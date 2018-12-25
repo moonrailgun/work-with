@@ -6,6 +6,7 @@ import { Card } from '/imports/api/card/card';
 import styled from 'styled-components';
 import Markdown from './Markdown';
 
+import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
 import LastPageIcon from '@material-ui/icons/LastPage';
@@ -82,6 +83,10 @@ const MainInfo = styled.main`
   }
 `
 
+const HelperText = styled.span`
+  color: #666;
+`
+
 class CardDetailContainer extends Component {
   state = {
     isShow: false,
@@ -104,10 +109,19 @@ class CardDetailContainer extends Component {
         {
           cardInfo ? (
             <div className="info">
-              <p>#{cardInfo.sequenceValue}</p>
+              <p><HelperText>#</HelperText>{cardInfo.sequenceValue}</p>
+              <Divider light />
               <Markdown>{cardInfo.content || ''}</Markdown>
-              <div className="tags">{cardInfo.tags}</div>
-              <div className="createdAt">创建于:{miment(cardInfo.createdAt).format()}</div>
+              <Divider light />
+              {
+                cardInfo.tags && (
+                  <React.Fragment>
+                    <div className="tags">{cardInfo.tags}</div>
+                    <Divider light />
+                  </React.Fragment>
+                )
+              }
+              <div className="createdAt"><HelperText>创建于:</HelperText>{miment(cardInfo.createdAt).format()}</div>
             </div>
           ) : (
             <Fragment>
