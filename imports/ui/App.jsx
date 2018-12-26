@@ -6,6 +6,7 @@ import Login from './routers/Login';
 import Register from './routers/Register';
 import Dashboard from './routers/Dashboard';
 import Kanban from './routers/Kanban';
+import Profile from './routers/Profile';
 import NotFound from './routers/NotFound';
 import Hello from './Hello.jsx';
 import Info from './Info.jsx';
@@ -57,6 +58,7 @@ class App extends React.Component {
               <Route path="/register" component={Register} />
               <Route path="/dashboard" component={Dashboard} />
               <Route path="/kanban/:kanbanId?" component={Kanban} />
+              <Route path="/profile/:userId?" component={Profile} />
               <Route component={NotFound} />
             </Switch>
           </div>
