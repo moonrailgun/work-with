@@ -1,4 +1,8 @@
 {
+  "nav": {
+    "home": "Home",
+    "logout": "Logout"
+  },
   "kanban": {
     "name": "Kanban",
     "archive": "Archive"
@@ -6,6 +10,11 @@
   "common": {
     "edit": "Edit",
     "delete": "Delete",
-    "move": "Move"
+    "move": "Move",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "tip": {
+    "disconnect": "Lost connect, please check your network."
   }
 }

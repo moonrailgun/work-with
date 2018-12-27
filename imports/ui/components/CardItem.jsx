@@ -94,8 +94,8 @@ class CardItem extends React.Component {
           rowsMax="8"
           defaultValue={this.props.cardContent}
         />
-        <Button color="primary" onClick={() => modalManager.closeTop()}>取消</Button>
-        <Button color="primary" onClick={() => this._handleEditSave()}>保存</Button>
+        <Button color="primary" onClick={() => modalManager.closeTop()}>{__('common.cancel')}</Button>
+        <Button color="primary" onClick={() => this._handleEditSave()}>{__('common.save')}</Button>
       </div>
     )
   }

@@ -192,7 +192,7 @@ class NavBar extends React.Component {
     if(!connected) {
       return (
         <Typography variant="h6" color="inherit" noWrap className={classes.networkTip}>
-          <span>无法正常连接到服务器，请检查您的网络连接</span>
+          <span>{__('tip.disconnect')}</span>
           <IconButton color="inherit" onClick={() => window.location.reload()} className={classes.networkTipIcon}>
             <RefreshIcon fontSize="inherit" />
           </IconButton>
@@ -239,8 +239,8 @@ class NavBar extends React.Component {
             open={!!this.state.accountAnchorEl}
             onClose={() => this.setState({accountAnchorEl: null})}
           >
-            <MenuItem onClick={() => this._handleBackToDashboard()}>我的首页</MenuItem>
-            <MenuItem onClick={() => this._handleLogout()}>退出登录</MenuItem>
+            <MenuItem onClick={() => this._handleBackToDashboard()}>{__('nav.home')}</MenuItem>
+            <MenuItem onClick={() => this._handleLogout()}>{__('nav.logout')}</MenuItem>
           </Menu>
         </div>
       )
