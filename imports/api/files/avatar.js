@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { FilesCollection } from 'meteor/ostrio:files';
 
 export const Avatar = new FilesCollection({
@@ -11,3 +12,17 @@ export const Avatar = new FilesCollection({
     return 'Please upload image, with size equal or less than 10MB';
   }
 });
+
+if (Meteor.isServer) {
+  Avatar.deny({
+    insert() {
+      return true;
+    },
+    update() {
+      return true;
+    },
+    remove() {
+      return true;
+    }
+  });
+}
