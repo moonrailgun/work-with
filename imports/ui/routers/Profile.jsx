@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import styled from 'styled-components';
 import { Avatar } from '/imports/api/files/avatar';
+import { updateInfo } from '/imports/api/users/methods';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -40,7 +41,12 @@ class ProfileRoute extends React.Component {
           console.log('上传失败');
         },
         onUploaded(err, fileRef) {
-          console.log('上传完毕');
+          console.log('上传完毕', fileRef);
+          updateInfo.call({
+            info: {
+              avatar: fileRef._id,
+            }
+          }, err => err && console.log(err))
         }
       })
     }
