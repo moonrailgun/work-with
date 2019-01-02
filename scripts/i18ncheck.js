@@ -1,5 +1,5 @@
 #!/usr/bin node
-const standardTransName = 'en.i18n';
+const standardTransName = 'zh.i18n';
 const standardTrans = require(`../i18n/${standardTransName}`);
 const requireDir = require('require-dir');
 const _allTrans = requireDir('../i18n/');
@@ -38,7 +38,7 @@ for (let name in allTrans) {
   let t = allTrans[name];
   let keys = objToArr(t);
   let losts = standardTransKeys.filter(st => keys.indexOf(st) === -1);
-  console.log(`=====[${name}]=====:` + losts.map(x => `\n缺失:${x}`));
+  console.log(`=====[${name}]=====:\n` + losts.map(x => `缺失:${x}`).join('\n'));
 }
 
 console.log('===================');
