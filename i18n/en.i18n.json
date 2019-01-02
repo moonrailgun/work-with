@@ -7,6 +7,14 @@
     "name": "Kanban",
     "archive": "Archive"
   },
+  "profile": {
+    "username": "User Name",
+    "password": "Password",
+    "avatar": "Avatar",
+    "email": "Email",
+    "fullname": "Full Name",
+    "language": "Language"
+  },
   "common": {
     "edit": "Edit",
     "delete": "Delete",

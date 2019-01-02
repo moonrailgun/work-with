@@ -7,6 +7,14 @@
     "name": "看板",
     "archive": "归档"
   },
+  "profile": {
+    "username": "用户名",
+    "password": "密码",
+    "avatar": "头像",
+    "email": "电子邮箱",
+    "fullname": "全名",
+    "language": "语言"
+  },
   "common": {
     "edit": "编辑",
     "delete": "删除",
