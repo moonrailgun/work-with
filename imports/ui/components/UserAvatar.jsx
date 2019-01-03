@@ -29,8 +29,6 @@ UserAvatar.propTypes = {
   userId: PropTypes.string,
 }
 
-console.log('UserAvatar', UserAvatar);
-
 export default withTracker(({userId}) => {
   const userInfoHandler = Meteor.subscribe('user.base.info', {userId}); // TODO: 可能需要优化
   const userInfo = userId

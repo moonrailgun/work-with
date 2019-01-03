@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import styled from 'styled-components';
+import UserAvatar from '/imports/ui/components/UserAvatar';
 import { Avatar } from '/imports/api/files/avatar';
 import { updateInfo } from '/imports/api/users/methods';
 
@@ -17,6 +18,33 @@ const ProfileCard = styled(Paper)`
   padding: ${props => props.theme.spacing.unit}px;
   margin-bottom: ${props => props.theme.spacing.unit}px;
 `
+
+const ProfileGrid = styled(Grid).attrs(props => ({
+  md: props.fullwidth ? 12 : 6,
+  container: true,
+}))`
+  margin-bottom: ${props => props.theme.spacing.unit}px;
+`
+
+const ProfileDetail = (props) => {
+  const {
+    label,
+    value,
+    fullWidth,
+    renderComponent,
+    addonComponent,
+  } = props;
+
+  return (
+    <ProfileGrid fullwidth={fullWidth ? 1 : 0}>
+      <span>{__(`profile.${label}`)}:</span>
+      {
+        renderComponent || <span>{value}</span>
+      }
+      {addonComponent}
+    </ProfileGrid>
+  )
+}
 
 class ProfileRoute extends React.Component {
   handleShowUpload = () => {
@@ -52,6 +80,21 @@ class ProfileRoute extends React.Component {
     }
   }
 
+  renderUserProfile() {
+    const userId = this.props.userId;
+    const userInfo = this.props.userInfo || {};
+    const detailInfo = userInfo.info || {}
+
+    return (
+      <Grid container>
+        <ProfileDetail fullWidth label="avatar" renderComponent={<UserAvatar userId={userId} />} />
+        <ProfileDetail label="username" value={userInfo.username} />
+        <ProfileDetail label="email" value={userInfo.email} />
+        <ProfileDetail label="fullname" value={detailInfo.fullname} />
+      </Grid>
+    )
+  }
+
   render() {
     const {
       allowEdit,
@@ -78,6 +121,7 @@ class ProfileRoute extends React.Component {
                   </Fragment>
                 )
               }
+              <div>{this.renderUserProfile()}</div>
             </ProfileCard>
           </Grid>
           <Grid item sm={4}>
@@ -98,6 +142,7 @@ export default withTracker(({match}) => {
   const userId = match.params.userId;
 
   return {
+    userId: userId || Meteor.userId(),
     allowEdit: userId ? userId === Meteor.userId() : true,
     userInfo: userId ? Meteor.users.findOne(userId) : Meteor.user(),
   }

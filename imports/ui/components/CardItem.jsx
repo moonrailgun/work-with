@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Markdown from './Markdown';
 import { update, remove } from '/imports/api/card/methods';
 import { modalManager } from '/imports/ui/utils/index';
-import UserAvatar from '/imports/ui/components/card/UserAvatar';
+import UserAvatar from '/imports/ui/components/UserAvatar';
 
 import Popper from '@material-ui/core/Popper';
 import Grow from '@material-ui/core/Grow';
