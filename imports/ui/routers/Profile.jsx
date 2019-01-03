@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
+import { _ } from 'meteor/erasaur:meteor-lodash';
 import styled from 'styled-components';
 import UserAvatar from '/imports/ui/components/UserAvatar';
 import { Avatar } from '/imports/api/files/avatar';
@@ -83,13 +84,15 @@ class ProfileRoute extends React.Component {
   renderUserProfile() {
     const userId = this.props.userId;
     const userInfo = this.props.userInfo || {};
-    const detailInfo = userInfo.info || {}
+    const detailInfo = userInfo.info || {};
+
+    const email = _.get(userInfo, 'emails.0.address');
 
     return (
       <Grid container>
         <ProfileDetail fullWidth label="avatar" renderComponent={<UserAvatar userId={userId} />} />
-        <ProfileDetail label="username" value={userInfo.username} />
-        <ProfileDetail label="email" value={userInfo.email} />
+        <ProfileDetail label="username" value={email} />
+        <ProfileDetail label="email" renderComponent={<a href={`mailto:${email}`}>{email}</a>} />
         <ProfileDetail label="fullname" value={detailInfo.fullname} />
       </Grid>
     )
