@@ -22,9 +22,10 @@ const ProfileCard = styled(Paper)`
 
 const ProfileGrid = styled(Grid).attrs(props => ({
   md: props.fullwidth ? 12 : 6,
+  item: true,
   container: true,
 }))`
-  margin-bottom: ${props => props.theme.spacing.unit}px;
+  margin-bottom: ${props => props.theme.spacing.unit}px !important;
 `
 
 const ProfileDetail = (props) => {
