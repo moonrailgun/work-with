@@ -18,6 +18,12 @@ const Container = styled(Grid)`
 const ProfileCard = styled(Paper)`
   padding: ${props => props.theme.spacing.unit}px;
   margin-bottom: ${props => props.theme.spacing.unit}px;
+  overflow: auto;
+
+  h1 {
+    margin: ${props => props.theme.spacing.unit}px 0;
+    ${props => props.theme.typography.title};
+  }
 `
 
 const ProfileGrid = styled(Grid).attrs(props => ({
@@ -82,6 +88,23 @@ class ProfileRoute extends React.Component {
     }
   }
 
+  renderSelfProfile() {
+    if(!this.props.isSelf) {
+      return null;
+    }
+
+    return (
+      <Fragment>
+        <ProfileCard>
+          <h1>我的看板</h1>
+        </ProfileCard>
+        <ProfileCard>
+          <h1>我的团队</h1>
+        </ProfileCard>
+      </Fragment>
+    )
+  }
+
   renderUserProfile() {
     const userId = this.props.userId;
     const userInfo = this.props.userInfo || {};
@@ -114,7 +137,7 @@ class ProfileRoute extends React.Component {
         <Grid container item sm={10} spacing={16}>
           <Grid item sm={8}>
             <ProfileCard>
-              用户信息
+              <h1>用户信息</h1>
               {
                 allowEdit && (
                   <Fragment>
@@ -127,6 +150,7 @@ class ProfileRoute extends React.Component {
               }
               <div>{this.renderUserProfile()}</div>
             </ProfileCard>
+            { this.renderSelfProfile() }
           </Grid>
           <Grid item sm={4}>
             <ProfileCard>
@@ -144,10 +168,12 @@ class ProfileRoute extends React.Component {
 
 export default withTracker(({match}) => {
   const userId = match.params.userId;
+  const isSelf = userId ? userId === Meteor.userId() : true;
 
   return {
+    isSelf,
     userId: userId || Meteor.userId(),
-    allowEdit: userId ? userId === Meteor.userId() : true,
+    allowEdit: isSelf,
     userInfo: userId ? Meteor.users.findOne(userId) : Meteor.user(),
   }
 })(ProfileRoute)
