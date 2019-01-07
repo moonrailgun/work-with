@@ -5,6 +5,7 @@ import { _ } from 'meteor/erasaur:meteor-lodash';
 import styled from 'styled-components';
 import UserAvatar from '/imports/ui/components/UserAvatar';
 import { Avatar } from '/imports/api/files/avatar';
+import { Kanban } from '/imports/api/kanban/kanban';
 import { updateInfo } from '/imports/api/users/methods';
 
 import Grid from '@material-ui/core/Grid';
@@ -97,6 +98,8 @@ class ProfileRoute extends React.Component {
       <Fragment>
         <ProfileCard>
           <h1>我的看板</h1>
+          <p>个人看板:{JSON.stringify(this.props.selfKanban.map(x => x._id))}</p>
+          <p>团队看板:{JSON.stringify(this.props.teamKanban.map(x => x._id))}</p>
         </ProfileCard>
         <ProfileCard>
           <h1>我的团队</h1>
@@ -167,13 +170,30 @@ class ProfileRoute extends React.Component {
 }
 
 export default withTracker(({match}) => {
-  const userId = match.params.userId;
+  const userId = match.params.userId || Meteor.userId();
   const isSelf = userId ? userId === Meteor.userId() : true;
 
-  return {
+  let tracker = {
     isSelf,
-    userId: userId || Meteor.userId(),
+    userId,
     allowEdit: isSelf,
     userInfo: userId ? Meteor.users.findOne(userId) : Meteor.user(),
   }
+
+  if(isSelf) {
+    // 如果是自己的profile的话追踪看板
+    const allKanbanHandler = Meteor.subscribe('kanban.all');
+    // 个人看板: 拥有者为自己且成员只有一人
+    tracker.selfKanban = Kanban.find({
+      userId,
+      'members.1': { $exists:0 }
+    }).fetch();
+    // 团队看板: 成员中有自己且至少有两人
+    tracker.teamKanban = Kanban.find({
+      members: userId,
+      'members.1': { $exists:1 }
+    }).fetch();
+  }
+
+  return tracker;
 })(ProfileRoute)
