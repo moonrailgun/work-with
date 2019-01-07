@@ -98,11 +98,12 @@ class ProfileRoute extends React.Component {
       <Fragment>
         <ProfileCard>
           <h1>我的看板</h1>
-          <p>个人看板:{JSON.stringify(this.props.selfKanban.map(x => x._id))}</p>
-          <p>团队看板:{JSON.stringify(this.props.teamKanban.map(x => x._id))}</p>
+          <p>个人看板:{JSON.stringify(_.get(this.props, 'kanban.self', []).map(x => x._id))}</p>
+          <p>团队看板:{JSON.stringify(_.get(this.props, 'kanban.team', []).map(x => x._id))}</p>
         </ProfileCard>
         <ProfileCard>
           <h1>我的团队</h1>
+          <p>团队看板:{JSON.stringify(_.get(this.props, 'team', []).map(x => x._id))}</p>
         </ProfileCard>
       </Fragment>
     )
@@ -183,16 +184,22 @@ export default withTracker(({match}) => {
   if(isSelf) {
     // 如果是自己的profile的话追踪看板
     const allKanbanHandler = Meteor.subscribe('kanban.all');
-    // 个人看板: 拥有者为自己且成员只有一人
-    tracker.selfKanban = Kanban.find({
+    const allTeamHandler = Meteor.subscribe('team.all');
+
+    let kanban = {};
+    kanban.self = Kanban.find({
       userId,
       'members.1': { $exists:0 }
-    }).fetch();
-    // 团队看板: 成员中有自己且至少有两人
-    tracker.teamKanban = Kanban.find({
+    }).fetch(); // 个人看板: 拥有者为自己且成员只有一人
+    kanban.team = Kanban.find({
       members: userId,
       'members.1': { $exists:1 }
-    }).fetch();
+    }).fetch(); // 团队看板: 成员中有自己且至少有两人
+    tracker.kanban = kanban;
+
+    tracker.team = Team.find({
+      members: userId
+    })
   }
 
   return tracker;
