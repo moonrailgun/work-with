@@ -26,6 +26,7 @@ import List from '@material-ui/core/List';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 
 const styles = theme => ({
   root: {
@@ -117,8 +118,8 @@ class NavBar extends React.Component {
     this.setState({accountAnchorEl: null});
   }
 
-  _handleBackToDashboard() {
-    this.props.history.push('/dashboard');
+  _handleNavJump(to = '/') {
+    this.props.history.push(to);
     this.setState({accountAnchorEl: null});
   }
 
@@ -239,7 +240,9 @@ class NavBar extends React.Component {
             open={!!this.state.accountAnchorEl}
             onClose={() => this.setState({accountAnchorEl: null})}
           >
-            <MenuItem onClick={() => this._handleBackToDashboard()}>{__('nav.home')}</MenuItem>
+            <MenuItem onClick={() => this._handleNavJump('/dashboard')}>{__('nav.home')}</MenuItem>
+            <MenuItem onClick={() => this._handleNavJump('/profile')}>{__('nav.profile')}</MenuItem>
+            <Divider />
             <MenuItem onClick={() => this._handleLogout()}>{__('nav.logout')}</MenuItem>
           </Menu>
         </div>

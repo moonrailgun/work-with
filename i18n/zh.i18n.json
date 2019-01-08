@@ -1,6 +1,7 @@
 {
   "nav": {
     "home": "我的首页",
+    "profile": "个人资料",
     "logout": "登出"
   },
   "kanban": {
