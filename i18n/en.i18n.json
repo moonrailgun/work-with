@@ -6,7 +6,10 @@
   },
   "kanban": {
     "name": "Kanban",
-    "archive": "Archive"
+    "archive": "Archive",
+    "my": "My Kanban",
+    "self": "Personal Kanban",
+    "team": "Team Kanban"
   },
   "profile": {
     "username": "User Name",
@@ -17,6 +20,7 @@
     "language": "Language"
   },
   "common": {
+    "search": "Search",
     "edit": "Edit",
     "delete": "Delete",
     "move": "Move",

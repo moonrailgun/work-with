@@ -170,11 +170,11 @@ class NavBar extends React.Component {
           <List
             component="nav"
           >
-            <ListSubheader component="div">我的看板</ListSubheader>
+            <ListSubheader component="div">{__('kanban.self')}</ListSubheader>
             {
               kanbanList.filter(x => x.userId === userId).map(listItemFn)
             }
-            <ListSubheader component="div">团队看板</ListSubheader>
+            <ListSubheader component="div">{__('kanban.team')}</ListSubheader>
             {
               kanbanList.filter(x => x.userId !== userId).map(listItemFn)
             }
@@ -278,7 +278,7 @@ class NavBar extends React.Component {
                 <SearchIcon />
               </div>
               <InputBase
-                placeholder="搜索..."
+                placeholder={`${__('common.search')}...`}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,

@@ -103,9 +103,9 @@ class ProfileRoute extends React.Component {
     return (
       <Fragment>
         <ProfileCard>
-          <h1>我的看板</h1>
+          <h1>{__('kanban.my')}</h1>
           <div>
-            <p>个人看板:</p>
+            <p>{__('kanban.self')}:</p>
             <Grid container spacing={16}>
               {_.get(this.props, 'kanban.self', []).map(kanban => {
                 return (
@@ -120,7 +120,7 @@ class ProfileRoute extends React.Component {
             </Grid>
           </div>
           <div>
-            <p>团队看板:</p>
+            <p>{__('kanban.team')}:</p>
             <Grid container spacing={16}>
               {_.get(this.props, 'kanban.team', []).map(kanban => {
                 return (
@@ -137,7 +137,7 @@ class ProfileRoute extends React.Component {
         </ProfileCard>
         <ProfileCard>
           <h1>我的团队</h1>
-          <p>团队看板:{JSON.stringify(_.get(this.props, 'team', []).map(x => x._id))}</p>
+          <p>团队列表:{JSON.stringify(_.get(this.props, 'team', []).map(x => x._id))}</p>
         </ProfileCard>
       </Fragment>
     )

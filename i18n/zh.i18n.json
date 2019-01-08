@@ -6,7 +6,10 @@
   },
   "kanban": {
     "name": "看板",
-    "archive": "归档"
+    "archive": "归档",
+    "my": "我的看板",
+    "self": "我的看板",
+    "team": "团队看板"
   },
   "profile": {
     "username": "用户名",
@@ -17,6 +20,7 @@
     "language": "语言"
   },
   "common": {
+    "search": "搜索",
     "edit": "编辑",
     "delete": "删除",
     "move": "移动",
