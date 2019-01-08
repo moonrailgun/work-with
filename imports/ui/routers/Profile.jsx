@@ -4,6 +4,7 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/erasaur:meteor-lodash';
 import styled from 'styled-components';
 import UserAvatar from '/imports/ui/components/UserAvatar';
+import KanbanItem from '/imports/ui/components/KanbanItem';
 import { Avatar } from '/imports/api/files/avatar';
 import { Kanban } from '/imports/api/kanban/kanban';
 import { Team } from '/imports/api/team/team';
@@ -90,6 +91,10 @@ class ProfileRoute extends React.Component {
     }
   }
 
+  _handleClickKanbanItem(kanbanId) {
+    this.props.history.push(`/kanban/${kanbanId}`);
+  }
+
   renderSelfProfile() {
     if(!this.props.isSelf) {
       return null;
@@ -99,8 +104,36 @@ class ProfileRoute extends React.Component {
       <Fragment>
         <ProfileCard>
           <h1>我的看板</h1>
-          <p>个人看板:{JSON.stringify(_.get(this.props, 'kanban.self', []).map(x => x._id))}</p>
-          <p>团队看板:{JSON.stringify(_.get(this.props, 'kanban.team', []).map(x => x._id))}</p>
+          <div>
+            <p>个人看板:</p>
+            <Grid container spacing={16}>
+              {_.get(this.props, 'kanban.self', []).map(kanban => {
+                return (
+                  <Grid item xs={3}>
+                    <KanbanItem
+                      title={kanban.title}
+                      onClick={() => this._handleClickKanbanItem(kanban._id)}
+                      />
+                  </Grid>
+                )
+              })}
+            </Grid>
+          </div>
+          <div>
+            <p>团队看板:</p>
+            <Grid container spacing={16}>
+              {_.get(this.props, 'kanban.team', []).map(kanban => {
+                return (
+                  <Grid item xs={3}>
+                    <KanbanItem
+                      title={kanban.title}
+                      onClick={() => this._handleClickKanbanItem(kanban._id)}
+                      />
+                  </Grid>
+                )
+              })}
+            </Grid>
+          </div>
         </ProfileCard>
         <ProfileCard>
           <h1>我的团队</h1>

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -50,6 +51,12 @@ function KanbanItem (props) {
       </CardActionArea>
     </Card>
   )
+}
+
+KanbanItem.propTypes = {
+  isNew: PropTypes.bool,
+  title: PropTypes.string,
+  onClick: PropTypes.function,
 }
 
 export default withStyles(styles)(KanbanItem);
