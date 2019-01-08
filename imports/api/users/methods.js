@@ -20,11 +20,12 @@ export const updateInfo = new ValidatedMethod({
     },
   }).validator(),
   run({info}) {
+    let userInfo = Meteor.users.findOne(this.userId);
     return Meteor.users.update(this.userId, {
       $set: {
-        info,
+        info: Object.assign({}, userInfo.info, info),
       }
-    })
+    });
   }
 })
 
