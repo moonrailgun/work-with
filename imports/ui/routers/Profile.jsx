@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import UserAvatar from '/imports/ui/components/UserAvatar';
 import { Avatar } from '/imports/api/files/avatar';
 import { Kanban } from '/imports/api/kanban/kanban';
+import { Team } from '/imports/api/team/team';
 import { updateInfo } from '/imports/api/users/methods';
 
 import Grid from '@material-ui/core/Grid';
