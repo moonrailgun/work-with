@@ -16,6 +16,8 @@ import Button from '@material-ui/core/Button';
 
 const Container = styled(Grid)`
   padding-top: ${props => props.theme.spacing.unit * 2}px;
+  padding-left: ${props => props.theme.spacing.unit}px;
+  padding-right: ${props => props.theme.spacing.unit}px;
 `
 
 const ProfileCard = styled(Paper)`
@@ -179,7 +181,7 @@ class ProfileRoute extends React.Component {
         justify="center"
       >
         <Grid container item sm={10} spacing={16}>
-          <Grid item sm={8}>
+          <Grid item xs={12} sm={8}>
             <ProfileCard>
               <h1>用户信息</h1>
               {
@@ -196,7 +198,7 @@ class ProfileRoute extends React.Component {
             </ProfileCard>
             { this.renderSelfProfile() }
           </Grid>
-          <Grid item sm={4}>
+          <Grid item xs={12} sm={4}>
             <ProfileCard>
               <div>
                 <span>允许编辑: {JSON.stringify(allowEdit)}</span>
