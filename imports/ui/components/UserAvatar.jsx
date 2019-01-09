@@ -10,6 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 
 const UserAvatar = (props) => {
   const {
+    username,
     avatar,
     size,
   } = props;
@@ -20,8 +21,10 @@ const UserAvatar = (props) => {
     style.height = size;
   }
 
-  return (
+  return avatar ? (
     <Avatar src={avatar} style={style} />
+  ) : (
+    <Avatar style={style}>{_.first(username)}</Avatar>
   )
 }
 
@@ -34,6 +37,7 @@ export default withTracker(({userId}) => {
   const userInfo = userId
     && userInfoHandler.ready()
     && Meteor.users.findOne(userId);
+  let username = _.get(userInfo, 'emails.address');
   let avatar;
   let avatarId = _.get(userInfo, 'info.avatar');
   if(avatarId) {
@@ -43,6 +47,7 @@ export default withTracker(({userId}) => {
 
   return {
     loading: !userInfoHandler.ready(),
+    username,
     avatar,
   }
 })(UserAvatar);
