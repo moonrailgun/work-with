@@ -37,6 +37,10 @@ const ProfileGrid = styled(Grid).attrs(props => ({
   margin-bottom: ${props => props.theme.spacing.unit}px !important;
 `
 
+const ProfileBlockItem = styled(KanbanItem)`
+  background-color: #efefef !important;
+`
+
 const ProfileDetail = (props) => {
   const {
     label,
@@ -108,12 +112,13 @@ class ProfileRoute extends React.Component {
             <p>{__('kanban.self')}:</p>
             <Grid container spacing={16}>
               {_.get(this.props, 'kanban.self', []).map(kanban => {
+                let id = kanban._id;
                 return (
-                  <Grid item xs={3}>
-                    <KanbanItem
+                  <Grid key={id} item xs={6} sm={3}>
+                    <ProfileBlockItem
                       title={kanban.title}
-                      onClick={() => this._handleClickKanbanItem(kanban._id)}
-                      />
+                      onClick={() => this._handleClickKanbanItem(id)}
+                    />
                   </Grid>
                 )
               })}
@@ -123,12 +128,13 @@ class ProfileRoute extends React.Component {
             <p>{__('kanban.team')}:</p>
             <Grid container spacing={16}>
               {_.get(this.props, 'kanban.team', []).map(kanban => {
+                let id = kanban._id;
                 return (
-                  <Grid item xs={3}>
-                    <KanbanItem
+                  <Grid key={id} item xs={6} sm={3}>
+                    <ProfileBlockItem
                       title={kanban.title}
-                      onClick={() => this._handleClickKanbanItem(kanban._id)}
-                      />
+                      onClick={() => this._handleClickKanbanItem(id)}
+                    />
                   </Grid>
                 )
               })}
@@ -233,7 +239,7 @@ export default withTracker(({match}) => {
 
     tracker.team = Team.find({
       members: userId
-    })
+    }).fetch()
   }
 
   return tracker;
