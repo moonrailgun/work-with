@@ -27,6 +27,9 @@
     "save": "保存",
     "cancel": "取消"
   },
+  "action": {
+    "addMember": "添加成员"
+  },
   "tip": {
     "disconnect": "无法正常连接到服务器，请检查您的网络连接"
   }

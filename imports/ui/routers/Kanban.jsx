@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Kanban } from '/imports/api/kanban/kanban';
 import { KanbanColumn } from '/imports/api/kanban/kanbanColumn';
@@ -9,6 +9,7 @@ import CardDetailContainer from '/imports/ui/components/CardDetailContainer';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   container: {
@@ -27,6 +28,18 @@ class KanbanRoute extends React.Component {
 
   onChangeCardDetail(cardId) {
     this.setState({selectedCardId: cardId});
+  }
+
+  onAddMember = () => {
+    console.log('添加成员');
+  }
+
+  renderActions() {
+    return (
+      <Grid container>
+        <Button color="secondary" onClick={this.onAddMember}>{__('action.addMember')}</Button>
+      </Grid>
+    )
   }
 
   render() {
@@ -48,6 +61,7 @@ class KanbanRoute extends React.Component {
           xs
         >
           <div><h3>{kanbanInfo.title}</h3></div>
+          {this.renderActions()}
           <Grid container item xs>
             <KanbanContainer
               kanbanId={kanbanId}

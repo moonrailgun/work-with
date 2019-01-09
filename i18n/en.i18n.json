@@ -27,6 +27,9 @@
     "save": "Save",
     "cancel": "Cancel"
   },
+  "action": {
+    "addMember": "Add Member"
+  },
   "tip": {
     "disconnect": "Lost connect, please check your network."
   }
