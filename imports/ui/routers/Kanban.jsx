@@ -7,6 +7,8 @@ import { Card } from '/imports/api/card/card';
 import KanbanContainer from '/imports/ui/components/KanbanContainer';
 import CardDetailContainer from '/imports/ui/components/CardDetailContainer';
 import UserAvatar from '/imports/ui/components/UserAvatar';
+import modalManager from '/imports/ui/utils/modalManager';
+import AddMember from '/imports/ui/components/modals/AddMember';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -33,7 +35,7 @@ class KanbanRoute extends React.Component {
   }
 
   onAddMember = () => {
-    console.log('添加成员');
+    modalManager.open(<AddMember />);
   }
 
   renderMembers() {
