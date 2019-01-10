@@ -16,6 +16,9 @@ const ModalBody = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   outline: 0;
+  max-width: 90%;
+  max-height: 80%;
+  overflow: auto;
 `
 
 const modalManager = {
