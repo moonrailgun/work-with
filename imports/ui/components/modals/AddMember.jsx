@@ -3,6 +3,12 @@ import React from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
 import { withTracker } from 'meteor/react-meteor-data';
+import { _ } from 'meteor/erasaur:meteor-lodash';
+
+const Root = styled.div`
+  width: 650px;
+  height: 340px;
+`
 
 class AddMember extends React.Component {
   render() {
@@ -10,16 +16,19 @@ class AddMember extends React.Component {
 
     const suggestions = this.props.users.map(user => {
       return {
-        label: user.emails.address,
-        value: user._id
+        label: _.get(user, 'emails[0].address'),
+        value: _.get(user, '_id')
       }
     })
 
     return (
-      <div>
-        123, loading: {JSON.stringify(this.props.loading)}
-        <Select options={suggestions} isClearable />
-      </div>
+      <Root>
+        <Select
+          options={suggestions}
+          isClearable
+          isMulti
+        />
+      </Root>
     )
   }
 }
