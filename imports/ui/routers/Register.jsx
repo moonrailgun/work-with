@@ -81,6 +81,8 @@ class Register extends React.Component {
         this.setState({
           errorMsg: err.reason,
         });
+
+        this.props.history.push('/');
       }else {
         console.log('创建成功');
       }

@@ -62,7 +62,7 @@ class Login extends React.Component {
         });
       }else {
         console.log('登录成功')
-        this.props.history.push('/'); // 回到首页
+        this.props.history.push('/dashborad'); // 回到首页
       }
     })
   }
@@ -73,13 +73,13 @@ class Login extends React.Component {
 
   componentDidMount() {
     if(this.props.user) {
-      this.props.history.push('/');
+      this.props.history.push('/dashborad');
     }
   }
 
   shouldComponentUpdate(nextProps) {
     if(nextProps.user) {
-      this.props.history.push('/');
+      this.props.history.push('/dashborad');
     }
 
     return true;
