@@ -2,13 +2,23 @@ import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Kanban } from '../../kanban/kanban.js';
 
+Meteor.publish('user.all', function() {
+  if(!this.userId) {
+    return this.ready();
+  }
+
+  return Meteor.users.find({}, {
+    fields: { emails: 1, info: 1 }
+  });
+})
+
 Meteor.publish('user.base.info', function({userId}) {
   if(!this.userId) {
     return this.ready();
   }
 
   return Meteor.users.find({ _id: userId }, {
-    fields: { username: 1, info: 1 }
+    fields: { emails: 1, info: 1 }
   });
 })
 
