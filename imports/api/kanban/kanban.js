@@ -106,4 +106,7 @@ Kanban.helpers({
   editableBy(userId) {
     return this.members.indexOf(userId) >= 0;
   },
+  isManager(userId) {
+    return this.userId === userId;
+  },
 })

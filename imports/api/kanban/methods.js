@@ -177,6 +177,37 @@ export const archiveCol = new ValidatedMethod({
   }
 })
 
+export const addMember = new ValidatedMethod({
+  name: 'kanban.addMember',
+  validate: new SimpleSchema({
+    kanbanId: {
+      type: String,
+      regEx: SimpleSchema.RegEx.Id,
+    },
+    members: {
+      type: [String],
+      regEx: SimpleSchema.RegEx.Id,
+    }
+  }).validator(),
+  run({kanbanId, members = []}) {
+    let kanban = Kanban.findOne(kanbanId);
+    if(!kanban.isManager(this.userId)) {
+      throw new Meteor.Error(
+        'api.kanban.addMember.accessDenied',
+        'No access to add member'
+      )
+    }
+
+    return Kanban.update(kanbanId, {
+      $push: {
+        members: {
+          $each: members
+        }
+      }
+    })
+  }
+})
+
 const ALLOW_METHODS = _.map([
   insert,
   addKanbanColumn,

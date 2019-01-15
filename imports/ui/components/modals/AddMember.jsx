@@ -6,6 +6,8 @@ import styled from 'styled-components';
 import { withTracker } from 'meteor/react-meteor-data';
 import { _ } from 'meteor/erasaur:meteor-lodash';
 import theme from '../../utils/theme';
+import { addMember } from '/imports/api/kanban/methods';
+import modalManager from '/imports/ui/utils/modalManager';
 
 import Button from '@material-ui/core/Button';
 
@@ -29,6 +31,27 @@ const Root = styled.div`
 `
 
 class AddMember extends React.Component {
+  state = {
+    selectedOption: [],
+  }
+
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+  }
+
+  handleAdd = () => {
+    const kanbanId = this.props.kanbanId;
+    const ids = this.state.selectedOption.map(s => s.value);
+    console.log('ids', ids);
+    addMember.call({kanbanId, members: ids}, (err) => {
+      if(err) {
+        console.error(err);
+      }
+
+      modalManager.closeTop();
+    })
+  }
+
   render() {
     const existsMembers = this.props.existsMembers;
     const suggestions = this.props.users
@@ -45,17 +68,24 @@ class AddMember extends React.Component {
         <img src="/images/new-team.svg" />
         <p>添加其他的成员加入您的看板，能更好的协同工作！</p>
         <Select
+          value={this.state.selectedOption}
+          onChange={this.handleChange}
           options={suggestions}
           isClearable
           isMulti
         />
-        <StyledButton variant="contained" color="primary">添加</StyledButton>
+        <StyledButton
+          variant="contained"
+          color="primary"
+          onClick={this.handleAdd}
+        >添加</StyledButton>
       </Root>
     )
   }
 }
 
 AddMember.propTypes = {
+  kanbanId: PropTypes.string,
   existsMembers: PropTypes.array,
 }
 
