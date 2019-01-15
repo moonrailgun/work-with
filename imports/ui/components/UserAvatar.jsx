@@ -37,7 +37,7 @@ export default withTracker(({userId}) => {
   const userInfo = userId
     && userInfoHandler.ready()
     && Meteor.users.findOne(userId);
-  let username = _.get(userInfo, 'emails.address');
+  let username = _.get(userInfo, 'emails.0.address');
   let avatar;
   let avatarId = _.get(userInfo, 'info.avatar');
   if(avatarId) {
