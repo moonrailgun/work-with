@@ -35,7 +35,9 @@ class KanbanRoute extends React.Component {
   }
 
   onAddMember = () => {
-    modalManager.open(<AddMember />);
+    const members = _.get(this.props.kanbanInfo, 'members', []);
+
+    modalManager.open(<AddMember existsMembers={members} />);
   }
 
   renderMembers() {

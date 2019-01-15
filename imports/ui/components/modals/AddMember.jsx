@@ -1,5 +1,6 @@
 // 添加看板成员modal
 import React from 'react';
+import PropTypes from 'prop-types';
 import Select from 'react-select';
 import styled from 'styled-components';
 import { withTracker } from 'meteor/react-meteor-data';
@@ -29,14 +30,15 @@ const Root = styled.div`
 
 class AddMember extends React.Component {
   render() {
-    console.log('this.props.users', this.props.users);
-
-    const suggestions = this.props.users.map(user => {
-      return {
-        label: _.get(user, 'emails[0].address'),
-        value: _.get(user, '_id')
-      }
-    })
+    const existsMembers = this.props.existsMembers;
+    const suggestions = this.props.users
+      .filter(user => !existsMembers.includes(user._id))
+      .map(user => {
+        return {
+          label: _.get(user, 'emails[0].address'),
+          value: _.get(user, '_id')
+        }
+      })
 
     return (
       <Root>
@@ -51,6 +53,10 @@ class AddMember extends React.Component {
       </Root>
     )
   }
+}
+
+AddMember.propTypes = {
+  existsMembers: PropTypes.array,
 }
 
 export default withTracker(() => {
