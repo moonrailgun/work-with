@@ -18,7 +18,6 @@ const ModalBody = styled.div`
   outline: 0;
   max-width: 90%;
   max-height: 80%;
-  overflow: auto;
 `
 
 const modalManager = {
