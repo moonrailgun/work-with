@@ -43,7 +43,7 @@ class KanbanRoute extends React.Component {
 
     return (
       <Grid container>
-        {members.map(userId => <UserAvatar userId={userId} />)}
+        {members.map(userId => <UserAvatar key={userId} userId={userId} />)}
       </Grid>
     )
   }
