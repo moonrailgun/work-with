@@ -4,8 +4,13 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Kanban } from '../../api/kanban/kanban';
 import { insert } from '../../api/kanban/methods';
 import KanbanItem from '../components/KanbanItem';
+import styled from 'styled-components';
 
 import Grid from '@material-ui/core/Grid';
+
+const Root = styled.div`
+  padding: ${props => props.theme.spacing.unit}px;
+`
 
 class Dashboard extends React.Component {
   _handleCreateKanban() {
@@ -39,7 +44,7 @@ class Dashboard extends React.Component {
         alignItems="center"
       >
         <Grid item xs={12} md={8}>
-          <div>
+          <Root>
             <p>我的看板</p>
             <Grid container spacing={16}>
               {
@@ -56,7 +61,7 @@ class Dashboard extends React.Component {
               </Grid>
             </Grid>
             <p>团队看板</p>
-          </div>
+          </Root>
         </Grid>
       </Grid>
 

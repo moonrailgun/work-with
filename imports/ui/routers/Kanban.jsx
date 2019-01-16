@@ -9,21 +9,24 @@ import CardDetailContainer from '/imports/ui/components/CardDetailContainer';
 import UserAvatar from '/imports/ui/components/UserAvatar';
 import modalManager from '/imports/ui/utils/modalManager';
 import AddMember from '/imports/ui/components/modals/AddMember';
+import styled from 'styled-components';
 
-import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import Button from '@material-ui/core/Button';
 
-const styles = theme => ({
-  container: {
-    overflow: 'hidden',
-    height: '100%',
-  },
-  main: {
-    height: '100%',
+const Root = styled(Grid).attrs(props => ({
+  container: true,
+  wrap: "nowrap",
+}))`
+  padding: ${props => props.theme.spacing.unit}px;
+  height: 100%;
+  overflow: hidden;
+
+  .members {
+    padding: ${props => props.theme.spacing.unit}px;
   }
-})
+`
 
 class KanbanRoute extends React.Component {
   state = {
@@ -45,7 +48,7 @@ class KanbanRoute extends React.Component {
     const members = _.get(this.props.kanbanInfo, 'members', []);
 
     return (
-      <Grid container>
+      <Grid container className="members">
         {members.map(userId => <UserAvatar key={userId} userId={userId} />)}
       </Grid>
     )
@@ -70,7 +73,7 @@ class KanbanRoute extends React.Component {
     const { kanbanId } = match.params;
 
     return (
-      <Grid container wrap="nowrap" className={classes.container}>
+      <Root>
         <Grid
           container
           direction="column"
@@ -96,12 +99,12 @@ class KanbanRoute extends React.Component {
             <CardDetailContainer cardId={this.state.selectedCardId}/>
           </Hidden>
         </Grid>
-      </Grid>
+      </Root>
     )
   }
 }
 
-const route = withTracker(({match}) => {
+export default withTracker(({match}) => {
   const kanbanId = match.params.kanbanId;
   const userId = Meteor.userId();
   if(userId) {
@@ -136,5 +139,3 @@ const route = withTracker(({match}) => {
     kanbanCards,
   }
 })(KanbanRoute)
-
-export default withStyles(styles)(route);

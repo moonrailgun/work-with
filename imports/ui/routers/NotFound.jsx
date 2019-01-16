@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -9,12 +10,10 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import ErrorIcon from '@material-ui/icons/Error';
 
-const styles = {
-  root: {
-    marginTop: 180,
-    width: 600,
-  }
-}
+const Main = styled(Card)`
+  margin-top: 180px;
+  width: 600px;
+`
 
 class NotFound extends React.Component {
   render() {
@@ -30,7 +29,7 @@ class NotFound extends React.Component {
         alignItems="center"
       >
         <Grid item>
-          <Card className={classes.root}>
+          <Main>
             <CardContent>
               <Typography variant="h2" align="center">
                 <ErrorIcon fontSize="inherit" color="error" />
@@ -50,11 +49,11 @@ class NotFound extends React.Component {
                 </Button>
               </Grid>
             </CardContent>
-          </Card>
+          </Main>
         </Grid>
       </Grid>
     )
   }
 }
 
-export default withStyles(styles)(NotFound);
+export default NotFound;
