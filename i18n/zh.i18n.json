@@ -20,6 +20,8 @@
     "language": "语言"
   },
   "common": {
+    "name": "名称",
+    "create": "创建",
     "search": "搜索",
     "edit": "编辑",
     "delete": "删除",

@@ -2,9 +2,10 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Kanban } from '../../api/kanban/kanban';
-import { insert } from '../../api/kanban/methods';
 import KanbanItem from '../components/KanbanItem';
+import AddKanban from '../components/modals/AddKanban';
 import styled from 'styled-components';
+import modalManager from '../utils/modalManager';
 
 import Grid from '@material-ui/core/Grid';
 
@@ -14,16 +15,7 @@ const Root = styled.div`
 
 class Dashboard extends React.Component {
   _handleCreateKanban() {
-    const kanbanId = insert.call({
-      title: 'Kanban#' + String(Math.random()),
-      visibility: 'public',
-    }, (err) => {
-      if(err) {
-        console.error('err', err);
-      }
-    })
-
-    console.log('kanbanId', kanbanId);
+    modalManager.open(<AddKanban />)
   }
 
   _handleClickKanbanItem(kanbanId) {

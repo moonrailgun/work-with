@@ -20,6 +20,8 @@
     "language": "Language"
   },
   "common": {
+    "name": "Name",
+    "create": "Create",
     "search": "Search",
     "edit": "Edit",
     "delete": "Delete",
