@@ -8,8 +8,6 @@ import Dashboard from './routers/Dashboard';
 import Kanban from './routers/Kanban';
 import Profile from './routers/Profile';
 import NotFound from './routers/NotFound';
-import Hello from './Hello.jsx';
-import Info from './Info.jsx';
 import LanguageToggle from './components/LanguageToggle.jsx';
 import NavBar from './components/NavBar.jsx';
 import { ThemeProvider } from 'styled-components';
