@@ -48,7 +48,7 @@ class AddKanban extends React.Component {
           variant="contained"
           color="primary"
           onClick={this.onAddKanban}
-        >创建</Button>
+        >{__('common.create')}</Button>
       </Root>
     )
   }
